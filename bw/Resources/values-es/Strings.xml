@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="Hello">Hello World, Click Me!</string>
+  <string name="ApplicationName">Palabras de la Biblia</string>
+  <string name="GreetingsTitle">Bienvenido!</string>
+  <string name="GreetingsMessage">¡Querido amigo! ¡Estamos muy contentos de que se haya unido a nuestra aplicación de palabras de la Biblia! Encuentra la palabra que está oculta y llena el campo de respuesta. ¡Buena suerte!</string>
+  <string name="VersionTitle">Versión</string>
+  <string name="WhatsNewTitle">Qué hay de nuevo:</string>
+  <string name="CancelButton">Cancelar</string>
+  <string name="CloseButton">Cerrar</string>
+  <string name="OkButton">DE ACUERDO</string>
+  <string name="NoMoreLevelsTitle">Final temporal!</string>
+  <string name="NoMoreLevelsMessage">Estimado amigo! ¡En este momento has completado todos los niveles de juego! Se agregarán nuevos niveles con nuevas actualizaciones de aplicaciones, ¡así que no se separe de nosotros! También puede comenzar un nuevo juego a través del campo de texto "Nivel actual" en la parte superior de la pantalla.</string>
+  <string name="CorrectToastText">¡Correcto! Fue la palabra</string>
+  <string name="HintDialogText">Abrir la primera carta?</string>
+  <string name="YesButton">Sí</string>
+  <string name="NoButton">No</string>
+  <string name="EmailCopiedLabel">El correo electrónico fue copiado</string>
+  <string name="DonateTitle">Soporte de BibleGameDev</string>
+  <string name="DonateText">Todo el apoyo para los proyectos de BibleGameDev es voluntario y sin costo. Para ayudarnos con sus donaciones, puede transferirlo a la cuenta Yandex.Money: 410015425804928 o escríbanos. Si lo desea, puede indicar su nombre o iniciales en el mensaje de donación. ¡Gracias por tu ayuda! ¡Con su ayuda, nuestros nuevos proyectos serán mejores!</string>
+  <string name="GoToSiteButton">Ir al sitio</string>
+  <string name="SupportUsTitle">Apoyanos</string>
+  <string name="SupportUsText">Estimados amigos! Siempre nos puede ayudar: colocando 5 estrellas para esta aplicación en la tienda Play Market, orando por el interés de las personas en el estudio de la Biblia, contándoles a los amigos acerca de esta aplicación, ayudándonos con donaciones voluntarias. ¡Gracias por tu apoyo!</string>
+  <string name="AboutDonatesButton">Sobre las donaciones</string>
+  <string name="HaveQuestionsLabel">¿Tienes preguntas o sugerencias?</string>
+  <string name="WriteUsLabel">Escribenos:</string>
+  <string name="AppVersionLabel">Version de aplicacion</string>
+  <string name="ThanksTitle">Gracias</string>
+  <string name="DevelopmentTitle">Desarrollo:</string>
+  <string name="GameWordsTitle">Palabras para el juego:</string>
+  <string name="ThanksBottomMessage">(se notará quién nos apoya)</string>
+  <string name="StartFromBeginningTitle">¿Empezar desde el primer nivel?</string>
+  <string name="HintNotAvailableText">Cantidad de minutos para el próximo aviso: {0}</string>
+  <string name="OpenNextHintText">Quieres abrir la siguiente carta?</string>
+  <string name="HintWillBeLessMinute">La información sobre herramientas estará disponible en unos pocos segundos</string>
+</resources>

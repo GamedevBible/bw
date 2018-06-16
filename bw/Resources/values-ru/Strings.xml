@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="Hello">Привет мир!</string>
+  <string name="ApplicationName">Библейские слова</string>
+  <string name="GreetingsTitle">Добро пожаловать!</string>
+  <string name="GreetingsMessage">Дорогой друг! Мы рады приветствовать тебя в нашем приложении Библейские слова! Угадывай, какое слово загадано и вводи это слово в строку ответа! Также ты можешь загадать слово другу! Желаем удачи!</string>
+  <string name="VersionTitle">Версия</string>
+  <string name="WhatsNewTitle">Что нового:</string>
+  <string name="CancelButton">Отмена</string>
+  <string name="CloseButton">Закрыть</string>
+  <string name="OkButton">OK</string>
+  <string name="NoMoreLevelsTitle">Временный финиш!</string>
+  <string name="NoMoreLevelsMessage">Дорогой друг! На данный момент ты завершил все уровни! Следующие уровни будут добавляться через обновления приложения, так что не расставайся с нами! Также ты можешь начать игру сначала нажав на текущий уровень в верхней части экрана.</string>
+  <string name="CorrectToastText">Верно! Это было слово</string>
+  <string name="HintDialogText">Открыть первую букву?</string>
+  <string name="YesButton">Да</string>
+  <string name="NoButton">Нет</string>
+  <string name="EmailCopiedLabel">Email был скопирован</string>
+  <string name="DonateTitle">Поддержка BibleGameDev</string>
+  <string name="DonateText">Вся оказываемая поддержка проектов BibleGameDev является добровольной и безвозмездной. Поддержать нас своими пожертвованиями можно переводом на счет Яндекс.Деньги: 410015425804928. По желанию, в сообщении к пожертвованию вы можете указать свое имя или инициалы. Благодарим вас за оказанную помощь! С вашей помощью наши новые проекты будут более качественными! Вы помогаете пробудить у людей интерес к изучению Библии!</string>
+  <string name="GoToSiteButton">Перейти на сайт</string>
+  <string name="SupportUsTitle">Поддержать нас</string>
+  <string name="SupportUsText">Дорогие друзья! Вы всегда можете поддержать нас: поставив нашему приложению 5 звезд в магазине Play Market, молясь за пробуждение у людей интереса к изучению Библии, рассказывая друзьям и знакомым об этом приложении, помогая нам добровольными пожертвованиями. Спасибо вам за вашу поддержку!</string>
+  <string name="AboutDonatesButton">О пожертвованиях</string>
+  <string name="HaveQuestionsLabel">У вас есть вопросы или предложения?</string>
+  <string name="WriteUsLabel">Напишите нам:</string>
+  <string name="AppVersionLabel">Версия приложения</string>
+  <string name="ThanksTitle">Благодарности</string>
+  <string name="DevelopmentTitle">Разработка:</string>
+  <string name="GameWordsTitle">Слова для игры:</string>
+  <string name="ThanksBottomMessage">(здесь будут отмечены все, оказавшие нам поддержку и помощь)</string>
+  <string name="StartFromBeginningTitle">Начать игру с первого уровня?</string>
+  <string name="HintNotAvailableText">Количество минут до следующей подсказки: {0}</string>
+  <string name="OpenNextHintText">Открыть следующую букву?</string>
+  <string name="HintWillBeLessMinute">Подсказка будет доступна через несколько секунд</string>
+</resources>

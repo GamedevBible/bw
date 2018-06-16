@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Paths>
+  <Jars></Jars>
+  <ResolvedResourceDirectories>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Analytics.Android.Bindings\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Analytics\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Android.Bindings\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Crashes.Android.Bindings\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Crashes\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.batteries_green\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.batteries_v2\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.core\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.lib.e_sqlite3\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.provider.e_sqlite3\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.AppCompat\library_project_imports\res</ResolvedResourceDirectory>
+  </ResolvedResourceDirectories>
+  <ResolvedAssetDirectories>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.AppCenter.Analytics.Android.Bindings\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.AppCenter.Analytics\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.AppCenter.Android.Bindings\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.AppCenter.Crashes.Android.Bindings\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.AppCenter.Crashes\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.AppCenter\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\SQLitePCLRaw.batteries_green\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\SQLitePCLRaw.batteries_v2\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\SQLitePCLRaw.core\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\SQLitePCLRaw.lib.e_sqlite3\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\SQLitePCLRaw.provider.e_sqlite3\library_project_imports\assets</ResolvedAssetDirectory>
+  </ResolvedAssetDirectories>
+  <ResolvedEnvironmentFiles />
+  <ResolvedResourceDirectoryStamps>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Analytics.Android.Bindings.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Analytics.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Android.Bindings.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Crashes.Android.Bindings.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.Crashes.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Microsoft.AppCenter.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.batteries_green.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.batteries_v2.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.core.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.lib.e_sqlite3.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\SQLitePCLRaw.provider.e_sqlite3.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>E:\MyDev\bw\bw\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.AppCompat.stamp</ResolvedResourceDirectoryStamp>
+  </ResolvedResourceDirectoryStamps>
+</Paths>

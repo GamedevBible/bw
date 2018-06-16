@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.biblegamedev.bw" android:versionCode="1" android:versionName="1.0.0">
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <application android:label="@string/ApplicationName" android:name="android.app.Application" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:debuggable="true">
+    <activity android:icon="@mipmap/ic_launcher" android:label="ContactsActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme.Main" android:name="md5f00e1100bf1cb45221e0f2bf60bbd0c5.ContactsActivity" />
+    <activity android:icon="@mipmap/ic_launcher" android:label="GameActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme.Main" android:name="md5f00e1100bf1cb45221e0f2bf60bbd0c5.GameActivity" />
+    <activity android:icon="@drawable/icon" android:screenOrientation="portrait" android:theme="@style/AppTheme.Main" android:name="md5f00e1100bf1cb45221e0f2bf60bbd0c5.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:icon="@mipmap/ic_launcher" android:label="MoreGamesActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme.Main" android:name="md5f00e1100bf1cb45221e0f2bf60bbd0c5.MoreGamesActivity" />
+    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="com.biblegamedev.bw.mono.MonoRuntimeProvider.__mono_init__" />
+    <!--suppress ExportedReceiver-->
+    <receiver android:name="mono.android.Seppuku">
+      <intent-filter>
+        <action android:name="mono.android.intent.action.SEPPUKU" />
+        <category android:name="mono.android.intent.category.SEPPUKU.com.biblegamedev.bw" />
+      </intent-filter>
+    </receiver>
+  </application>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>
