@@ -10,6 +10,8 @@ using Android.Views;
 using Android.Content;
 using Android.Widget;
 using System;
+using System.Text.RegularExpressions;
+using Android.Text;
 
 namespace bw
 {
@@ -36,6 +38,7 @@ namespace bw
 
         private const int _contactsActivityCode = 14;
         private bool _inactive;
+        private EditText _editText;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -85,13 +88,25 @@ namespace bw
                     break;
                 case Resource.Id.recordsButton:
                     var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.FriendWordDialog)
-                    .SetMessage("Загадайте слово, нажмите ОК, и передайте устройство другу.")
-                    .SetPositiveButton(Resources.GetString(Resource.String.OkButton), CloseDialog)
+                    .SetMessage(Resources.GetString(Resource.String.FriendWordTitle))
+                    .SetPositiveButton(Resources.GetString(Resource.String.OkButton), StartFriendGame)
                     .SetNegativeButton(Resources.GetString(Resource.String.CancelButton), CloseDialog)
-                    .SetCancelable(false)
-                    .Create();
+                    .SetCancelable(false);
+
+                    _editText = new EditText(this);
+                    _editText.SetAllCaps(true);
+                    _editText.TextSize = 20;
+                    _editText.SetEms(14);
+                    _editText.SetMaxEms(14);
+                    _editText.TextAlignment = TextAlignment.Center;
+                    var maxLength = 10;
+                    _editText.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(maxLength) });
+                    _editText.InputType = InputTypes.ClassText;
+                    dialog.SetView(_editText);
+                    dialog.Create();
 
                     dialog.Show();
+                    _editText.RequestFocus();
                     _inactive = false;
                     break;
                 case Resource.Id.guideButton:
@@ -104,6 +119,24 @@ namespace bw
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void StartFriendGame(object sender, DialogClickEventArgs e)
+        {
+            var currentLanguage = Locale.Default.Language;
+            _currentLocale = currentLanguage == "es" ? Locales.Spain : currentLanguage == "ru" ? Locales.Russian : Locales.English;
+
+            var regex = _currentLocale == Locales.Russian ? @"^[а-яА-Я]+$" : @"^[a-zA-Z]+$";
+
+            if (Regex.IsMatch(_editText.Text, regex))
+            {
+                var intent = GameActivity.CreateStartIntent(this, true, _editText.Text);
+                StartActivity(intent);
+            }
+            else
+            {
+                Toast.MakeText(this, Resources.GetString(Resource.String.WrongFormat), ToastLength.Short).Show();
             }
         }
 

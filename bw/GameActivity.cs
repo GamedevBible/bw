@@ -140,11 +140,21 @@ namespace bw
             var currentLanguage = Locale.Default.Language;
             _currentLocale = currentLanguage == "es" ? Locales.Spain : currentLanguage == "ru" ? Locales.Russian : Locales.English;
 
-            _alphabetIntArray = new int[GameHelper.GetAlphabet(_currentLocale).Length];
-            _alphabetArray = GameHelper.GetAlphabet(_currentLocale);
-            for (int i = 0; i < GameHelper.GetAlphabet(_currentLocale).Length; i++)
+            _alphabetIntArray = new int[40];
+            _alphabetArray = new string[40];
+
+            for (int i = 0; i < 40; i++)
             {
-                _alphabetIntArray[i] = 1;
+                if (i < GameHelper.GetAlphabet(_currentLocale).Length)
+                {
+                    _alphabetIntArray[i] = 1;
+                    _alphabetArray[i] = GameHelper.GetAlphabet(_currentLocale)[i];
+                }  
+                else
+                {
+                    _alphabetIntArray[i] = 2;
+                    _alphabetArray[i] = string.Empty;
+                } 
             }
 
             if (savedInstanceState != null)
@@ -173,46 +183,48 @@ namespace bw
 
         private void InitGameAndStart()
         {
-
+            ApplyWordVisibility();
+            ApplyLettersVisibility();
+            FillAlphabet();
         }
 
         private void OpenLetter(string letter)
         {
             for (var i = 0; i < _currentWord.Length; i++)
             {
-                if (_currentWord[i].ToString().Equals(letter))
+                if (_currentWord[i].ToString().ToUpper() == letter.ToUpper())
                 {
                     switch(i)
                     {
                         case 0:
-                            _word1button.Text = letter;
+                            _word1button.Text = letter.ToUpper();
                             break;
                         case 1:
-                            _word2button.Text = letter;
+                            _word2button.Text = letter.ToUpper();
                             break;
                         case 2:
-                            _word3button.Text = letter;
+                            _word3button.Text = letter.ToUpper();
                             break;
                         case 3:
-                            _word4button.Text = letter;
+                            _word4button.Text = letter.ToUpper();
                             break;
                         case 4:
-                            _word5button.Text = letter;
+                            _word5button.Text = letter.ToUpper();
                             break;
                         case 5:
-                            _word6button.Text = letter;
+                            _word6button.Text = letter.ToUpper();
                             break;
                         case 6:
-                            _word7button.Text = letter;
+                            _word7button.Text = letter.ToUpper();
                             break;
                         case 7:
-                            _word8button.Text = letter;
+                            _word8button.Text = letter.ToUpper();
                             break;
                         case 8:
-                            _word9button.Text = letter;
+                            _word9button.Text = letter.ToUpper();
                             break;
                         case 9:
-                            _word10button.Text = letter;
+                            _word10button.Text = letter.ToUpper();
                             break;
                     }
                 }
@@ -223,84 +235,84 @@ namespace bw
         {
             _letter1Layout.Enabled = _alphabetIntArray[0] == 1;
             _letter1Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter2Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter2Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter3Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter3Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter4Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter4Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter5Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter5Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter6Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter6Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter7Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter7Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter8Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter8Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter9Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter9Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter10Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter10Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter11Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter11Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter12Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter12Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter13Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter13Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter14Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter14Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter15Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter15Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter16Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter16Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter17Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter17Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter18Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter18Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter19Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter19Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter20Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter20Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter21Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter21Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter22Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter22Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter23Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter23Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter24Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter24Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter25Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter25Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter26Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter26Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter27Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter27Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter28Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter28Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter29Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter29Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter30Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter30Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter31Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter31Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter32Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter32Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter33Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter33Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter34Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter34Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter35Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter35Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter36Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter36Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter37Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter37Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter38Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter38Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter39Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter39Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
-            _letter40Layout.Enabled = _alphabetIntArray[0] == 1;
-            _letter40Button.SetBackgroundResource(_alphabetIntArray[0] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter2Layout.Enabled = _alphabetIntArray[1] == 1;
+            _letter2Button.SetBackgroundResource(_alphabetIntArray[1] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter3Layout.Enabled = _alphabetIntArray[2] == 1;
+            _letter3Button.SetBackgroundResource(_alphabetIntArray[2] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter4Layout.Enabled = _alphabetIntArray[3] == 1;
+            _letter4Button.SetBackgroundResource(_alphabetIntArray[3] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter5Layout.Enabled = _alphabetIntArray[4] == 1;
+            _letter5Button.SetBackgroundResource(_alphabetIntArray[4] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter6Layout.Enabled = _alphabetIntArray[5] == 1;
+            _letter6Button.SetBackgroundResource(_alphabetIntArray[5] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter7Layout.Enabled = _alphabetIntArray[6] == 1;
+            _letter7Button.SetBackgroundResource(_alphabetIntArray[6] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter8Layout.Enabled = _alphabetIntArray[7] == 1;
+            _letter8Button.SetBackgroundResource(_alphabetIntArray[7] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter9Layout.Enabled = _alphabetIntArray[8] == 1;
+            _letter9Button.SetBackgroundResource(_alphabetIntArray[8] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter10Layout.Enabled = _alphabetIntArray[9] == 1;
+            _letter10Button.SetBackgroundResource(_alphabetIntArray[9] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter11Layout.Enabled = _alphabetIntArray[10] == 1;
+            _letter11Button.SetBackgroundResource(_alphabetIntArray[10] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter12Layout.Enabled = _alphabetIntArray[11] == 1;
+            _letter12Button.SetBackgroundResource(_alphabetIntArray[11] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter13Layout.Enabled = _alphabetIntArray[12] == 1;
+            _letter13Button.SetBackgroundResource(_alphabetIntArray[12] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter14Layout.Enabled = _alphabetIntArray[13] == 1;
+            _letter14Button.SetBackgroundResource(_alphabetIntArray[13] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter15Layout.Enabled = _alphabetIntArray[14] == 1;
+            _letter15Button.SetBackgroundResource(_alphabetIntArray[14] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter16Layout.Enabled = _alphabetIntArray[15] == 1;
+            _letter16Button.SetBackgroundResource(_alphabetIntArray[15] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter17Layout.Enabled = _alphabetIntArray[16] == 1;
+            _letter17Button.SetBackgroundResource(_alphabetIntArray[16] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter18Layout.Enabled = _alphabetIntArray[17] == 1;
+            _letter18Button.SetBackgroundResource(_alphabetIntArray[17] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter19Layout.Enabled = _alphabetIntArray[18] == 1;
+            _letter19Button.SetBackgroundResource(_alphabetIntArray[18] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter20Layout.Enabled = _alphabetIntArray[19] == 1;
+            _letter20Button.SetBackgroundResource(_alphabetIntArray[19] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter21Layout.Enabled = _alphabetIntArray[20] == 1;
+            _letter21Button.SetBackgroundResource(_alphabetIntArray[20] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter22Layout.Enabled = _alphabetIntArray[21] == 1;
+            _letter22Button.SetBackgroundResource(_alphabetIntArray[21] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter23Layout.Enabled = _alphabetIntArray[22] == 1;
+            _letter23Button.SetBackgroundResource(_alphabetIntArray[22] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter24Layout.Enabled = _alphabetIntArray[23] == 1;
+            _letter24Button.SetBackgroundResource(_alphabetIntArray[23] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter25Layout.Enabled = _alphabetIntArray[24] == 1;
+            _letter25Button.SetBackgroundResource(_alphabetIntArray[24] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter26Layout.Enabled = _alphabetIntArray[25] == 1;
+            _letter26Button.SetBackgroundResource(_alphabetIntArray[25] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter27Layout.Enabled = _alphabetIntArray[26] == 1;
+            _letter27Button.SetBackgroundResource(_alphabetIntArray[26] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter28Layout.Enabled = _alphabetIntArray[27] == 1;
+            _letter28Button.SetBackgroundResource(_alphabetIntArray[27] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter29Layout.Enabled = _alphabetIntArray[28] == 1;
+            _letter29Button.SetBackgroundResource(_alphabetIntArray[28] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter30Layout.Enabled = _alphabetIntArray[29] == 1;
+            _letter30Button.SetBackgroundResource(_alphabetIntArray[29] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter31Layout.Enabled = _alphabetIntArray[30] == 1;
+            _letter31Button.SetBackgroundResource(_alphabetIntArray[30] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter32Layout.Enabled = _alphabetIntArray[31] == 1;
+            _letter32Button.SetBackgroundResource(_alphabetIntArray[31] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter33Layout.Enabled = _alphabetIntArray[32] == 1;
+            _letter33Button.SetBackgroundResource(_alphabetIntArray[32] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter34Layout.Enabled = _alphabetIntArray[33] == 1;
+            _letter34Button.SetBackgroundResource(_alphabetIntArray[33] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter35Layout.Enabled = _alphabetIntArray[34] == 1;
+            _letter35Button.SetBackgroundResource(_alphabetIntArray[34] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter36Layout.Enabled = _alphabetIntArray[35] == 1;
+            _letter36Button.SetBackgroundResource(_alphabetIntArray[35] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter37Layout.Enabled = _alphabetIntArray[36] == 1;
+            _letter37Button.SetBackgroundResource(_alphabetIntArray[36] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter38Layout.Enabled = _alphabetIntArray[37] == 1;
+            _letter38Button.SetBackgroundResource(_alphabetIntArray[37] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter39Layout.Enabled = _alphabetIntArray[38] == 1;
+            _letter39Button.SetBackgroundResource(_alphabetIntArray[38] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
+            _letter40Layout.Enabled = _alphabetIntArray[39] == 1;
+            _letter40Button.SetBackgroundResource(_alphabetIntArray[39] == 1 ? Resource.Drawable.button_background : Resource.Drawable.button_disabled);
 
             for (var i = 0; i < _alphabetIntArray.Length; i++)
             {
@@ -308,6 +320,222 @@ namespace bw
                     OpenLetter(_alphabetArray[i]);
             }
         }
+
+        private void ApplyWordVisibility()
+        {
+            switch (_currentWord.Length)
+            {
+                case 1:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Gone;
+                    _word3layout.Visibility = ViewStates.Gone;
+                    _word4layout.Visibility = ViewStates.Gone;
+                    _word5layout.Visibility = ViewStates.Gone;
+                    _word6layout.Visibility = ViewStates.Gone;
+                    _word7layout.Visibility = ViewStates.Gone;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 2:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Gone;
+                    _word4layout.Visibility = ViewStates.Gone;
+                    _word5layout.Visibility = ViewStates.Gone;
+                    _word6layout.Visibility = ViewStates.Gone;
+                    _word7layout.Visibility = ViewStates.Gone;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 3:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Gone;
+                    _word5layout.Visibility = ViewStates.Gone;
+                    _word6layout.Visibility = ViewStates.Gone;
+                    _word7layout.Visibility = ViewStates.Gone;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 4:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Gone;
+                    _word6layout.Visibility = ViewStates.Gone;
+                    _word7layout.Visibility = ViewStates.Gone;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 5:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Visible;
+                    _word6layout.Visibility = ViewStates.Gone;
+                    _word7layout.Visibility = ViewStates.Gone;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 6:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Visible;
+                    _word6layout.Visibility = ViewStates.Visible;
+                    _word7layout.Visibility = ViewStates.Gone;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 7:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Visible;
+                    _word6layout.Visibility = ViewStates.Visible;
+                    _word7layout.Visibility = ViewStates.Visible;
+                    _word8layout.Visibility = ViewStates.Gone;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 8:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Visible;
+                    _word6layout.Visibility = ViewStates.Visible;
+                    _word7layout.Visibility = ViewStates.Visible;
+                    _word8layout.Visibility = ViewStates.Visible;
+                    _word9layout.Visibility = ViewStates.Gone;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 9:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Visible;
+                    _word6layout.Visibility = ViewStates.Visible;
+                    _word7layout.Visibility = ViewStates.Visible;
+                    _word8layout.Visibility = ViewStates.Visible;
+                    _word9layout.Visibility = ViewStates.Visible;
+                    _word10layout.Visibility = ViewStates.Gone;
+                    break;
+                case 10:
+                    _word1layout.Visibility = ViewStates.Visible;
+                    _word2layout.Visibility = ViewStates.Visible;
+                    _word3layout.Visibility = ViewStates.Visible;
+                    _word4layout.Visibility = ViewStates.Visible;
+                    _word5layout.Visibility = ViewStates.Visible;
+                    _word6layout.Visibility = ViewStates.Visible;
+                    _word7layout.Visibility = ViewStates.Visible;
+                    _word8layout.Visibility = ViewStates.Visible;
+                    _word9layout.Visibility = ViewStates.Visible;
+                    _word10layout.Visibility = ViewStates.Visible;
+                    break;
+            }
+        }
+
+        private void FillAlphabet()
+        {
+            _letter1Button.Text = _alphabetArray[0];
+            _letter2Button.Text = _alphabetArray[1];
+            _letter3Button.Text = _alphabetArray[2];
+            _letter4Button.Text = _alphabetArray[3];
+            _letter5Button.Text = _alphabetArray[4];
+            _letter6Button.Text = _alphabetArray[5];
+            _letter7Button.Text = _alphabetArray[6];
+            _letter8Button.Text = _alphabetArray[7];
+            _letter9Button.Text = _alphabetArray[8];
+            _letter10Button.Text = _alphabetArray[9];
+            _letter11Button.Text = _alphabetArray[10];
+            _letter12Button.Text = _alphabetArray[11];
+            _letter13Button.Text = _alphabetArray[12];
+            _letter14Button.Text = _alphabetArray[13];
+            _letter15Button.Text = _alphabetArray[14];
+            _letter16Button.Text = _alphabetArray[15];
+            _letter17Button.Text = _alphabetArray[16];
+            _letter18Button.Text = _alphabetArray[17];
+            _letter19Button.Text = _alphabetArray[18];
+            _letter20Button.Text = _alphabetArray[19];
+            _letter21Button.Text = _alphabetArray[20];
+            _letter22Button.Text = _alphabetArray[21];
+            _letter23Button.Text = _alphabetArray[22];
+            _letter24Button.Text = _alphabetArray[23];
+            _letter25Button.Text = _alphabetArray[24];
+            _letter26Button.Text = _alphabetArray[25];
+            _letter27Button.Text = _alphabetArray[26];
+            _letter28Button.Text = _alphabetArray[27];
+            _letter29Button.Text = _alphabetArray[28];
+            _letter30Button.Text = _alphabetArray[29];
+            _letter31Button.Text = _alphabetArray[30];
+            _letter32Button.Text = _alphabetArray[31];
+            _letter33Button.Text = _alphabetArray[32];
+            _letter34Button.Text = _alphabetArray[33];
+            _letter35Button.Text = _alphabetArray[34];
+            _letter36Button.Text = _alphabetArray[35];
+            _letter37Button.Text = _alphabetArray[36];
+            _letter38Button.Text = _alphabetArray[37];
+            _letter39Button.Text = _alphabetArray[38];
+            _letter40Button.Text = _alphabetArray[39];
+        }
+
+        private void ApplyLettersVisibility()
+        {
+            _letter1Layout.Visibility = _alphabetIntArray[0] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter2Layout.Visibility = _alphabetIntArray[1] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter3Layout.Visibility = _alphabetIntArray[2] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter4Layout.Visibility = _alphabetIntArray[3] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter5Layout.Visibility = _alphabetIntArray[4] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter6Layout.Visibility = _alphabetIntArray[5] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter7Layout.Visibility = _alphabetIntArray[6] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter8Layout.Visibility = _alphabetIntArray[7] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter9Layout.Visibility = _alphabetIntArray[8] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter10Layout.Visibility = _alphabetIntArray[9] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter11Layout.Visibility = _alphabetIntArray[10] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter12Layout.Visibility = _alphabetIntArray[11] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter13Layout.Visibility = _alphabetIntArray[12] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter14Layout.Visibility = _alphabetIntArray[13] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter15Layout.Visibility = _alphabetIntArray[14] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter16Layout.Visibility = _alphabetIntArray[15] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter17Layout.Visibility = _alphabetIntArray[16] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter18Layout.Visibility = _alphabetIntArray[17] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter19Layout.Visibility = _alphabetIntArray[18] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter20Layout.Visibility = _alphabetIntArray[19] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter21Layout.Visibility = _alphabetIntArray[20] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter22Layout.Visibility = _alphabetIntArray[21] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter23Layout.Visibility = _alphabetIntArray[22] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter24Layout.Visibility = _alphabetIntArray[23] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter25Layout.Visibility = _alphabetIntArray[24] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter26Layout.Visibility = _alphabetIntArray[25] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter27Layout.Visibility = _alphabetIntArray[26] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter28Layout.Visibility = _alphabetIntArray[27] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter29Layout.Visibility = _alphabetIntArray[28] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter30Layout.Visibility = _alphabetIntArray[29] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter31Layout.Visibility = _alphabetIntArray[30] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter32Layout.Visibility = _alphabetIntArray[31] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter33Layout.Visibility = _alphabetIntArray[32] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter34Layout.Visibility = _alphabetIntArray[33] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter35Layout.Visibility = _alphabetIntArray[34] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter36Layout.Visibility = _alphabetIntArray[35] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter37Layout.Visibility = _alphabetIntArray[36] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter38Layout.Visibility = _alphabetIntArray[37] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter39Layout.Visibility = _alphabetIntArray[38] != 2 ? ViewStates.Visible : ViewStates.Gone;
+            _letter40Layout.Visibility = _alphabetIntArray[39] != 2 ? ViewStates.Visible : ViewStates.Gone;
+        }
+
 
         protected override void OnSaveInstanceState(Bundle outState)
         {

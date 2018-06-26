@@ -14,6 +14,7 @@
   <color name="transparent">#00000000</color>
   <color name="good_answer">#00E676</color>
   <color name="bad_answer">#F44336</color>
+  <color name="game_gray">#484848</color>
 
   <color name="fpow_green">#00c853</color>
   <color name="bm_blue">#01A7F2</color>

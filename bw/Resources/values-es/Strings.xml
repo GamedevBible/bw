@@ -9,12 +9,12 @@
   <string name="CancelButton">Cancelar</string>
   <string name="CloseButton">Cerrar</string>
   <string name="OkButton">DE ACUERDO</string>
-  <string name="NoMoreLevelsTitle">Final temporal!</string>
-  <string name="NoMoreLevelsMessage">Estimado amigo! ¡En este momento has completado todos los niveles de juego! Se agregarán nuevos niveles con nuevas actualizaciones de aplicaciones, ¡así que no se separe de nosotros! También puede comenzar un nuevo juego a través del campo de texto "Nivel actual" en la parte superior de la pantalla.</string>
+  <string name="FriendWordTitle">Ingrese la palabra. Haga clic en ОК. Pase el dispositivo a un amigo</string>
   <string name="CorrectToastText">¡Correcto! Fue la palabra</string>
   <string name="HintDialogText">Abrir la primera carta?</string>
   <string name="YesButton">Sí</string>
   <string name="NoButton">No</string>
+  <string name="WrongFormat">Word contiene símbolos incorrectos</string>
   <string name="EmailCopiedLabel">El correo electrónico fue copiado</string>
   <string name="DonateTitle">Soporte de BibleGameDev</string>
   <string name="DonateText">Todo el apoyo para los proyectos de BibleGameDev es voluntario y sin costo. Para ayudarnos con sus donaciones, puede transferirlo a la cuenta Yandex.Money: 410015425804928 o escríbanos. Si lo desea, puede indicar su nombre o iniciales en el mensaje de donación. ¡Gracias por tu ayuda! ¡Con su ayuda, nuestros nuevos proyectos serán mejores!</string>
