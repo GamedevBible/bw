@@ -11,6 +11,7 @@
   <string name="OkButton">OK</string>
   <string name="FriendWordTitle">Введите слово \nНажмите ОК \nПередайте телефон другу</string>
   <string name="CorrectToastText">Верно! Это было слово</string>
+  <string name="UnguessedWordText">Попытки угадать слово закончились! Загаданное слово: {0}. Желаем вам удачи в следующий раз!</string>
   <string name="HintDialogText">Открыть первую букву?</string>
   <string name="YesButton">Да</string>
   <string name="NoButton">Нет</string>

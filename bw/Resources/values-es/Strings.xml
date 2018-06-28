@@ -11,6 +11,7 @@
   <string name="OkButton">DE ACUERDO</string>
   <string name="FriendWordTitle">Ingrese la palabra. Haga clic en ОК. Pase el dispositivo a un amigo</string>
   <string name="CorrectToastText">¡Correcto! Fue la palabra</string>
+  <string name="UnguessedWordText">¡Intentar adivinar la palabra ha terminado! La palabra adivinada: {0}. ¡Te deseamos la mejor de las suertes la próxima vez!</string>
   <string name="HintDialogText">Abrir la primera carta?</string>
   <string name="YesButton">Sí</string>
   <string name="NoButton">No</string>

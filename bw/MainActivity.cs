@@ -12,6 +12,7 @@ using Android.Widget;
 using System;
 using System.Text.RegularExpressions;
 using Android.Text;
+using Android.Runtime;
 
 namespace bw
 {
@@ -19,6 +20,8 @@ namespace bw
         Icon = "@drawable/Icon")]
     public class MainActivity : AppCompatActivity
     {
+        private int _gameActivityCode = 777;
+
         public enum Locales
         {
             English,
@@ -39,6 +42,8 @@ namespace bw
         private const int _contactsActivityCode = 14;
         private bool _inactive;
         private EditText _editText;
+        private string _gameCurrentWord;
+        private bool _wordWasGuessed;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -132,7 +137,7 @@ namespace bw
             if (Regex.IsMatch(_editText.Text, regex))
             {
                 var intent = GameActivity.CreateStartIntent(this, true, _editText.Text);
-                StartActivity(intent);
+                StartActivityForResult(intent, _gameActivityCode);
             }
             else
             {
@@ -258,6 +263,57 @@ namespace bw
                 Locale.Default = spanishLocale;
                 var config = new Configuration { Locale = spanishLocale };
                 BaseContext.Resources.UpdateConfiguration(config, BaseContext.Resources.DisplayMetrics);
+            }
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            _inactive = false;
+
+            if (!string.IsNullOrEmpty(_gameCurrentWord))
+            {
+                if (!_wordWasGuessed)
+                {
+                    var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
+                        .SetTitle(_gameCurrentWord)
+                        .SetMessage(string.Format(Resources.GetString(Resource.String.UnguessedWordText), _gameCurrentWord))
+                        .SetPositiveButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
+                        .SetCancelable(false)
+                        .Create();
+
+                    dialog.Show();
+                }
+                else
+                {
+                    var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
+                        .SetTitle(_gameCurrentWord)
+                        .SetMessage($"{Resources.GetString(Resource.String.CorrectToastText)} {_gameCurrentWord}!")
+                        .SetPositiveButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
+                        .SetCancelable(false)
+                        .Create();
+
+                    dialog.Show();
+                }
+
+                _gameCurrentWord = string.Empty;
+            }
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            _inactive = false;
+
+            if (resultCode == Result.Ok)
+            {
+                if (requestCode == _gameActivityCode)
+                {
+                    _gameCurrentWord = data.GetStringExtra("currentWord");
+                    _wordWasGuessed = data.GetBooleanExtra("wordWasGuessed", false);
+                }
             }
         }
     }

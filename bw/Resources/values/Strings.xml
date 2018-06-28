@@ -11,6 +11,7 @@
   <string name="OkButton">OK</string>
   <string name="FriendWordTitle">Enter the word \nClick OK \nTransfer the device to your friend</string>
   <string name="CorrectToastText">Right! It was the word</string>
+  <string name="UnguessedWordText">Trying to guess the word is over! The guessed word: {0}. We wish you the best of luck next time!</string>
   <string name="YesButton">Yes</string>
   <string name="NoButton">No</string>
   <string name="WrongFormat">Word contains incorrect symbols</string>

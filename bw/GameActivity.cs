@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -12,6 +11,7 @@ using Android.Widget;
 using Android.Support.V7.App;
 using Java.Util;
 using Android.Content.PM;
+using Android.Views.Animations;
 
 namespace bw
 {
@@ -121,12 +121,17 @@ namespace bw
         private View _word10layout;
         private Button _word10button;
 
+        private string _category;
+        private TextView _categoryTV;
+        private bool _needFinishActivity;
         private bool _friendWordMode;
         private string _currentWord;
         private int[] _alphabetIntArray;
         private string[] _alphabetArray;
         private ProgressDialog _progressDialog;
         private Locales _currentLocale;
+        private int _lifes;
+        private ImageView _bridgeImage;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -142,6 +147,7 @@ namespace bw
 
             _alphabetIntArray = new int[40];
             _alphabetArray = new string[40];
+            _lifes = 7;
 
             for (int i = 0; i < 40; i++)
             {
@@ -162,6 +168,9 @@ namespace bw
                 _friendWordMode = savedInstanceState.GetBoolean(nameof(_friendWordMode));
                 _currentWord = savedInstanceState.GetString(nameof(_currentWord));
                 _alphabetIntArray = savedInstanceState.GetIntArray(nameof(_alphabetIntArray));
+                _lifes = savedInstanceState.GetInt(nameof(_lifes));
+                _category = savedInstanceState.GetString(nameof(_category));
+                _needFinishActivity = savedInstanceState.GetBoolean(nameof(_needFinishActivity));
             }
 
             _progressDialog = new ProgressDialog(this, Resource.Style.ProgressDialogTheme) { Indeterminate = true };
@@ -179,6 +188,18 @@ namespace bw
         protected override void OnResume()
         {
             base.OnResume();
+
+            if (_needFinishActivity)
+            {
+                Intent myIntent = new Intent(this, typeof(MainActivity));
+                if (!string.IsNullOrEmpty(_currentWord))
+                {
+                    myIntent.PutExtra("currentWord", _currentWord.ToUpper());
+                    myIntent.PutExtra("wordWasGuessed", false);
+                }
+                SetResult(Result.Ok, myIntent);
+                Finish();
+            }
         }
 
         private void InitGameAndStart()
@@ -186,6 +207,7 @@ namespace bw
             ApplyWordVisibility();
             ApplyLettersVisibility();
             FillAlphabet();
+            RefreshAlphabet();
         }
 
         private void OpenLetter(string letter)
@@ -229,6 +251,33 @@ namespace bw
                     }
                 }
             }
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+
+            if (_progressDialog.IsShowing)
+                _progressDialog.Dismiss();
+
+            if (_currentWord == null)
+                _currentWord = string.Empty;
+
+            if (_alphabetIntArray == null)
+            {
+                _alphabetIntArray = new int[GameHelper.GetAlphabet(_currentLocale).Length];
+                for (int i = 0; i < GameHelper.GetAlphabet(_currentLocale).Length; i++)
+                {
+                    _alphabetIntArray[i] = 1;
+                }
+            }
+
+            outState.PutBoolean(nameof(_friendWordMode), _friendWordMode);
+            outState.PutString(nameof(_currentWord), _currentWord);
+            outState.PutIntArray(nameof(_alphabetIntArray), _alphabetIntArray);
+            outState.PutInt(nameof(_lifes), _lifes);
+            outState.PutString(nameof(_category), _category);
+            outState.PutBoolean(nameof(_needFinishActivity), _needFinishActivity);
         }
 
         private void RefreshAlphabet()
@@ -319,6 +368,128 @@ namespace bw
                 if (_alphabetIntArray[i] == 0)
                     OpenLetter(_alphabetArray[i]);
             }
+
+            var allWordFilled = AllWordFilled();
+            if (allWordFilled)
+            {
+                CheckWordGuessed();
+            }
+        }
+
+        private void CheckWordGuessed()
+        {
+            Intent myIntent = new Intent(this, typeof(MainActivity));
+            myIntent.PutExtra("currentWord", _currentWord.ToUpper());
+            myIntent.PutExtra("wordWasGuessed", true);
+            SetResult(Result.Ok, myIntent);
+            Finish();
+        }
+
+        private bool AllWordFilled()
+        {
+            if (_word1layout.Visibility == ViewStates.Visible)
+            {
+                if (!string.IsNullOrEmpty(_word1button.Text))
+                {
+                    if (_word2layout.Visibility == ViewStates.Visible)
+                    {
+                        if (!string.IsNullOrEmpty(_word2button.Text))
+                        {
+                            if (_word3layout.Visibility == ViewStates.Visible)
+                            {
+                                if (!string.IsNullOrEmpty(_word3button.Text))
+                                {
+                                    if (_word4layout.Visibility == ViewStates.Visible)
+                                    {
+                                        if (!string.IsNullOrEmpty(_word4button.Text))
+                                        {
+                                            if (_word5layout.Visibility == ViewStates.Visible)
+                                            {
+                                                if (!string.IsNullOrEmpty(_word5button.Text))
+                                                {
+                                                    if (_word6layout.Visibility == ViewStates.Visible)
+                                                    {
+                                                        if (!string.IsNullOrEmpty(_word6button.Text))
+                                                        {
+                                                            if (_word7layout.Visibility == ViewStates.Visible)
+                                                            {
+                                                                if (!string.IsNullOrEmpty(_word7button.Text))
+                                                                {
+                                                                    if (_word8layout.Visibility == ViewStates.Visible)
+                                                                    {
+                                                                        if (!string.IsNullOrEmpty(_word8button.Text))
+                                                                        {
+                                                                            if (_word9layout.Visibility == ViewStates.Visible)
+                                                                            {
+                                                                                if (!string.IsNullOrEmpty(_word9button.Text))
+                                                                                {
+                                                                                    if (_word10layout.Visibility == ViewStates.Visible)
+                                                                                    {
+                                                                                        if (!string.IsNullOrEmpty(_word10button.Text))
+                                                                                        {
+                                                                                            return true;
+                                                                                        }
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        return true;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                return true;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        return true;
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                return true;
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        return true;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void ApplyWordVisibility()
@@ -536,31 +707,6 @@ namespace bw
             _letter40Layout.Visibility = _alphabetIntArray[39] != 2 ? ViewStates.Visible : ViewStates.Gone;
         }
 
-
-        protected override void OnSaveInstanceState(Bundle outState)
-        {
-            base.OnSaveInstanceState(outState);
-
-            if (_progressDialog.IsShowing)
-                _progressDialog.Dismiss();
-
-            if (_currentWord == null)
-                _currentWord = string.Empty;
-
-            if (_alphabetIntArray == null)
-            {
-                _alphabetIntArray = new int[GameHelper.GetAlphabet(_currentLocale).Length];
-                for (int i = 0; i < GameHelper.GetAlphabet(_currentLocale).Length; i++)
-                {
-                    _alphabetIntArray[i] = 1;
-                }
-            }
-
-            outState.PutBoolean(nameof(_friendWordMode), _friendWordMode);
-            outState.PutString(nameof(_currentWord), _currentWord);
-            outState.PutIntArray(nameof(_alphabetIntArray), _alphabetIntArray);
-        }
-
         public static Intent CreateStartIntent(Context context, bool friendWordMode = false, string friendWord = null)
         {
             var intent = new Intent(context, typeof(GameActivity));
@@ -575,6 +721,9 @@ namespace bw
 
         private void InitViews()
         {
+            _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
+            _categoryTV = FindViewById<TextView>(Resource.Id.category);
+
             _letter1Layout = FindViewById<View>(Resource.Id.letter1Layout);
             _letter1Button = FindViewById<Button>(Resource.Id.letter1Button);
             _letter2Layout = FindViewById<View>(Resource.Id.letter2Layout);
@@ -721,132 +870,250 @@ namespace bw
 
         private void OnLetterClicked(object sender, EventArgs e)
         {
+            if (_needFinishActivity)
+            {
+                Intent myIntent = new Intent(this, typeof(MainActivity));
+                myIntent.PutExtra("currentWord", _currentWord.ToUpper());
+                myIntent.PutExtra("wordWasGuessed", false);
+                SetResult(Result.Ok, myIntent);
+                Finish();
+                return;
+            }
+
             var layout = (View)sender;
             switch (layout.Id)
             {
                 case Resource.Id.letter1Layout:
                     _alphabetIntArray[0] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter1Button);
                     break;
                 case Resource.Id.letter2Layout:
                     _alphabetIntArray[1] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter2Button);
                     break;
                 case Resource.Id.letter3Layout:
                     _alphabetIntArray[2] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter3Button);
                     break;
                 case Resource.Id.letter4Layout:
                     _alphabetIntArray[3] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter4Button);
                     break;
                 case Resource.Id.letter5Layout:
                     _alphabetIntArray[4] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter5Button);
                     break;
                 case Resource.Id.letter6Layout:
                     _alphabetIntArray[5] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter6Button);
                     break;
                 case Resource.Id.letter7Layout:
                     _alphabetIntArray[6] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter7Button);
                     break;
                 case Resource.Id.letter8Layout:
                     _alphabetIntArray[7] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter8Button);
                     break;
                 case Resource.Id.letter9Layout:
                     _alphabetIntArray[8] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter9Button);
                     break;
                 case Resource.Id.letter10Layout:
                     _alphabetIntArray[9] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter10Button);
                     break;
                 case Resource.Id.letter11Layout:
                     _alphabetIntArray[10] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter11Button);
                     break;
                 case Resource.Id.letter12Layout:
                     _alphabetIntArray[11] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter12Button);
                     break;
                 case Resource.Id.letter13Layout:
                     _alphabetIntArray[12] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter13Button);
                     break;
                 case Resource.Id.letter14Layout:
                     _alphabetIntArray[13] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter14Button);
                     break;
                 case Resource.Id.letter15Layout:
                     _alphabetIntArray[14] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter15Button);
                     break;
                 case Resource.Id.letter16Layout:
                     _alphabetIntArray[15] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter16Button);
                     break;
                 case Resource.Id.letter17Layout:
                     _alphabetIntArray[16] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter17Button);
                     break;
                 case Resource.Id.letter18Layout:
                     _alphabetIntArray[17] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter18Button);
                     break;
                 case Resource.Id.letter19Layout:
                     _alphabetIntArray[18] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter19Button);
                     break;
                 case Resource.Id.letter20Layout:
                     _alphabetIntArray[19] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter20Button);
                     break;
                 case Resource.Id.letter21Layout:
                     _alphabetIntArray[20] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter21Button);
                     break;
                 case Resource.Id.letter22Layout:
                     _alphabetIntArray[21] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter22Button);
                     break;
                 case Resource.Id.letter23Layout:
                     _alphabetIntArray[22] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter23Button);
                     break;
                 case Resource.Id.letter24Layout:
                     _alphabetIntArray[23] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter24Button);
                     break;
                 case Resource.Id.letter25Layout:
                     _alphabetIntArray[24] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter25Button);
                     break;
                 case Resource.Id.letter26Layout:
                     _alphabetIntArray[25] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter26Button);
                     break;
                 case Resource.Id.letter27Layout:
                     _alphabetIntArray[26] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter27Button);
                     break;
                 case Resource.Id.letter28Layout:
                     _alphabetIntArray[27] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter28Button);
                     break;
                 case Resource.Id.letter29Layout:
                     _alphabetIntArray[28] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter29Button);
                     break;
                 case Resource.Id.letter30Layout:
                     _alphabetIntArray[29] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter30Button);
                     break;
                 case Resource.Id.letter31Layout:
                     _alphabetIntArray[30] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter31Button);
                     break;
                 case Resource.Id.letter32Layout:
                     _alphabetIntArray[31] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter32Button);
                     break;
                 case Resource.Id.letter33Layout:
                     _alphabetIntArray[32] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter33Button);
                     break;
                 case Resource.Id.letter34Layout:
                     _alphabetIntArray[33] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter34Button);
                     break;
                 case Resource.Id.letter35Layout:
                     _alphabetIntArray[34] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter35Button);
                     break;
                 case Resource.Id.letter36Layout:
                     _alphabetIntArray[35] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter36Button);
                     break;
                 case Resource.Id.letter37Layout:
                     _alphabetIntArray[36] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter37Button);
                     break;
                 case Resource.Id.letter38Layout:
                     _alphabetIntArray[37] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter38Button);
                     break;
                 case Resource.Id.letter39Layout:
                     _alphabetIntArray[38] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter39Button);
                     break;
                 case Resource.Id.letter40Layout:
                     _alphabetIntArray[39] = 0;
+                    RefreshAlphabet();
+                    ProccessLifes(_letter40Button);
                     break;
-            }
+            }                
+        }
 
-            RefreshAlphabet();
+        private void ProccessLifes(Button buttonPressed)
+        {
+            if (!(_currentWord.ToUpper().Contains(buttonPressed.Text.ToUpper())))
+            {
+                _lifes--;
+                if (_lifes <= 0)
+                {
+                    _needFinishActivity = true;
+
+                    var anim = new ScaleAnimation(1f, 1.3f, 1f, 1.3f, 50f, 50f);
+                    anim.RepeatMode = RepeatMode.Reverse;
+                    anim.Duration = 1000;
+                    anim.RepeatCount = 1;
+                    anim.FillEnabled = true;
+                    anim.FillAfter = true;
+                    anim.AnimationEnd += Anim_AnimationEnd;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(anim));
+                }
+            }
+        }
+
+        private void Anim_AnimationEnd(object sender, Animation.AnimationEndEventArgs e)
+        {
+            Intent myIntent = new Intent(this, typeof(MainActivity));
+            myIntent.PutExtra("currentWord", _currentWord.ToUpper());
+            myIntent.PutExtra("wordWasGuessed", false);
+            SetResult(Result.Ok, myIntent);
+            Finish();
         }
     }
 }
