@@ -45,6 +45,13 @@ namespace bw
         private string _gameCurrentWord;
         private bool _wordWasGuessed;
 
+        private string[] _categories => new string[] {
+            Resources.GetString(Resource.String.CatAll).ToUpper(),
+            Resources.GetString(Resource.String.CatNames).ToUpper(),
+            Resources.GetString(Resource.String.CatCities).ToUpper(),
+            Resources.GetString(Resource.String.CatCountries).ToUpper(),
+            Resources.GetString(Resource.String.CatBooks).ToUpper()};
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -89,7 +96,10 @@ namespace bw
             {
                 case Resource.Id.startButton:
                     _inactive = false;
-                    StartActivity(GameActivity.CreateStartIntent(this));
+                    new Android.Support.V7.App.AlertDialog.Builder(this)
+                    .SetItems(_categories, DialogClickHandler)
+                    .SetTitle("Category")
+                        .Show();
                     break;
                 case Resource.Id.recordsButton:
                     var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.FriendWordDialog)
@@ -125,6 +135,35 @@ namespace bw
                 default:
                     break;
             }
+        }
+
+        private void DialogClickHandler(object sender, DialogClickEventArgs e)
+        {
+            _inactive = false;
+            var intent = GameActivity.CreateStartIntent(this, false, "Error", 0);
+
+            switch (e.Which)
+            {
+                case 0:
+                    intent = GameActivity.CreateStartIntent(this, false, "Библия", 0);
+                    break;
+                case 1:
+                    intent = GameActivity.CreateStartIntent(this, false, "Иоанн", 1);
+                    break;
+                case 2:
+                    intent = GameActivity.CreateStartIntent(this, false, "Иерусалим", 2);
+                    break;
+                case 3:
+                    intent = GameActivity.CreateStartIntent(this, false, "Египет", 3);
+                    break;
+                case 4:
+                    intent = GameActivity.CreateStartIntent(this, false, "Числа", 4);
+                    break;
+                default:
+                    break;
+            }
+
+            StartActivityForResult(intent, _gameActivityCode);
         }
 
         private void StartFriendGame(object sender, DialogClickEventArgs e)

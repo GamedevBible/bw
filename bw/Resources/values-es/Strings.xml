@@ -34,4 +34,13 @@
   <string name="HintNotAvailableText">Cantidad de minutos para el próximo aviso: {0}</string>
   <string name="OpenNextHintText">Quieres abrir la siguiente carta?</string>
   <string name="HintWillBeLessMinute">La información sobre herramientas estará disponible en unos pocos segundos</string>
+
+  <string name="FriendsWord">Palabra de un amigo</string>
+  <string name="CatAll">Todas</string>
+  <string name="CatNames">Nombres</string>
+  <string name="CatCities">Ciudades</string>
+  <string name="CatCountries">Países</string>
+  <string name="CatBooks">Libros</string>
+
+  <string name="ContinueButton">Continuar</string>
 </resources>

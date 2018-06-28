@@ -29,4 +29,13 @@
   <string name="DevelopmentTitle">Development:</string>
   <string name="GameWordsTitle">Words for game:</string>
   <string name="ThanksBottomMessage">(here will be noted who support us)</string>
+
+  <string name="FriendsWord">Friend\'s word</string>
+  <string name="CatAll">All</string>
+  <string name="CatNames">Names</string>
+  <string name="CatCities">Cities</string>
+  <string name="CatCountries">Countries</string>
+  <string name="CatBooks">Books</string>
+
+  <string name="ContinueButton">Continue</string>
 </resources>

@@ -12,6 +12,7 @@ using Android.Support.V7.App;
 using Java.Util;
 using Android.Content.PM;
 using Android.Views.Animations;
+using Android.Support.V7.Widget;
 
 namespace bw
 {
@@ -121,10 +122,16 @@ namespace bw
         private View _word10layout;
         private Button _word10button;
 
+        private AppCompatImageButton _backButton;
+        private AppCompatImageButton _hintButton;
+
+        private Android.Support.V7.App.AlertDialog _myDialog;
+        private bool _inactive;
+        private bool _friendMode;
         private string _category;
         private TextView _categoryTV;
         private bool _needFinishActivity;
-        private bool _friendWordMode;
+        private bool _hintWasClicked;
         private string _currentWord;
         private int[] _alphabetIntArray;
         private string[] _alphabetArray;
@@ -132,15 +139,29 @@ namespace bw
         private Locales _currentLocale;
         private int _lifes;
         private ImageView _bridgeImage;
+        private string[] _categories => new string[] {
+            Resources.GetString(Resource.String.CatAll).ToUpper(),
+            Resources.GetString(Resource.String.CatNames).ToUpper(),
+            Resources.GetString(Resource.String.CatCities).ToUpper(),
+            Resources.GetString(Resource.String.CatCountries).ToUpper(),
+            Resources.GetString(Resource.String.CatBooks).ToUpper()};
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
+            
+            _friendMode = Intent.GetBooleanExtra(nameof(_friendMode), false);
 
-            _friendWordMode = Intent.GetBooleanExtra(nameof(_friendWordMode), false);
-
-            if (_friendWordMode)
+            if (_friendMode)
+            {
                 _currentWord = Intent.GetStringExtra(nameof(_currentWord)) ?? string.Empty;
+                _category = Resources.GetString(Resource.String.FriendsWord).ToUpper();
+            }
+            else
+            {
+                _currentWord = GenerateNewWord();
+                _category = _categories[Intent.GetIntExtra(nameof(_category), 0)];
+            }
 
             var currentLanguage = Locale.Default.Language;
             _currentLocale = currentLanguage == "es" ? Locales.Spain : currentLanguage == "ru" ? Locales.Russian : Locales.English;
@@ -165,12 +186,13 @@ namespace bw
 
             if (savedInstanceState != null)
             {
-                _friendWordMode = savedInstanceState.GetBoolean(nameof(_friendWordMode));
                 _currentWord = savedInstanceState.GetString(nameof(_currentWord));
                 _alphabetIntArray = savedInstanceState.GetIntArray(nameof(_alphabetIntArray));
                 _lifes = savedInstanceState.GetInt(nameof(_lifes));
                 _category = savedInstanceState.GetString(nameof(_category));
                 _needFinishActivity = savedInstanceState.GetBoolean(nameof(_needFinishActivity));
+                _hintWasClicked = savedInstanceState.GetBoolean(nameof(_hintWasClicked));
+                _friendMode = savedInstanceState.GetBoolean(nameof(_friendMode));
             }
 
             _progressDialog = new ProgressDialog(this, Resource.Style.ProgressDialogTheme) { Indeterminate = true };
@@ -271,13 +293,14 @@ namespace bw
                     _alphabetIntArray[i] = 1;
                 }
             }
-
-            outState.PutBoolean(nameof(_friendWordMode), _friendWordMode);
+            
             outState.PutString(nameof(_currentWord), _currentWord);
             outState.PutIntArray(nameof(_alphabetIntArray), _alphabetIntArray);
             outState.PutInt(nameof(_lifes), _lifes);
             outState.PutString(nameof(_category), _category);
             outState.PutBoolean(nameof(_needFinishActivity), _needFinishActivity);
+            outState.PutBoolean(nameof(_hintWasClicked), _hintWasClicked);
+            outState.PutBoolean(nameof(_friendMode), _friendMode);
         }
 
         private void RefreshAlphabet()
@@ -378,11 +401,18 @@ namespace bw
 
         private void CheckWordGuessed()
         {
-            Intent myIntent = new Intent(this, typeof(MainActivity));
-            myIntent.PutExtra("currentWord", _currentWord.ToUpper());
-            myIntent.PutExtra("wordWasGuessed", true);
-            SetResult(Result.Ok, myIntent);
-            Finish();
+            if(_friendMode)
+            {
+                Intent myIntent = new Intent(this, typeof(MainActivity));
+                myIntent.PutExtra("currentWord", _currentWord.ToUpper());
+                myIntent.PutExtra("wordWasGuessed", true);
+                SetResult(Result.Ok, myIntent);
+                Finish();
+            }
+            else
+            {
+                ShowFinishAlert(true);
+            }
         }
 
         private bool AllWordFilled()
@@ -707,15 +737,14 @@ namespace bw
             _letter40Layout.Visibility = _alphabetIntArray[39] != 2 ? ViewStates.Visible : ViewStates.Gone;
         }
 
-        public static Intent CreateStartIntent(Context context, bool friendWordMode = false, string friendWord = null)
+        public static Intent CreateStartIntent(Context context, bool friendMode, string currentWord = "", int category = -1)
         {
             var intent = new Intent(context, typeof(GameActivity));
-
-            intent.PutExtra(nameof(_friendWordMode), friendWordMode);
-
-            if (friendWordMode)
-                intent.PutExtra(nameof(_currentWord), friendWord);
             
+            intent.PutExtra(nameof(_currentWord), currentWord);
+            intent.PutExtra(nameof(_category), category);
+            intent.PutExtra(nameof(_friendMode), friendMode);
+
             return intent;
         }
 
@@ -723,6 +752,7 @@ namespace bw
         {
             _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
             _categoryTV = FindViewById<TextView>(Resource.Id.category);
+            _categoryTV.Text = _category;
 
             _letter1Layout = FindViewById<View>(Resource.Id.letter1Layout);
             _letter1Button = FindViewById<Button>(Resource.Id.letter1Button);
@@ -866,10 +896,131 @@ namespace bw
             _letter38Layout.Click += OnLetterClicked;
             _letter39Layout.Click += OnLetterClicked;
             _letter40Layout.Click += OnLetterClicked;
+
+            _hintButton = FindViewById<AppCompatImageButton>(Resource.Id.hintButton);
+            _backButton = FindViewById<AppCompatImageButton>(Resource.Id.backButton);
+
+            _hintButton.Enabled = !_hintWasClicked;
+            _hintButton.Clickable = !_hintWasClicked;
+            _hintButton.Visibility = _hintWasClicked ? ViewStates.Invisible : ViewStates.Visible;
+
+            _hintButton.Click += OnHintButtonClicked;
+            _backButton.Click += (s, a) =>
+            {
+                Finish();
+            };
+        }
+
+        private void OnHintButtonClicked(object sender, EventArgs e)
+        {
+            if (_hintWasClicked)
+                return;
+
+            for (var i = 0; i < 40; i++)
+            {
+                if (_currentWord.ToUpper().Contains(_alphabetArray[i].ToUpper()) && _alphabetIntArray[i] == 1)
+                {
+                    _alphabetIntArray[i] = 0;
+                    RefreshAlphabet();
+                    _hintWasClicked = true;
+                    _hintButton.Enabled = false;
+                    _hintButton.Clickable = false;
+                    _hintButton.Visibility = ViewStates.Invisible;
+                    return;
+                }
+            }
+        }
+
+        private void ShowFinishAlert(bool wasGuessed)
+        {
+            if (_myDialog != null && _myDialog.IsShowing)
+                return;
+
+            _inactive = true;
+
+            if (!wasGuessed)
+            {
+                var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
+                    .SetTitle(_currentWord.ToUpper())
+                    .SetMessage(string.Format(Resources.GetString(Resource.String.UnguessedWordText), _currentWord.ToUpper()))
+                    .SetNegativeButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
+                    .SetPositiveButton(Resources.GetString(Resource.String.ContinueButton), ContinueGame)
+                    .SetCancelable(false)
+                    .Create();
+
+                _myDialog = dialog;
+
+                _myDialog.Show();
+            }
+            else
+            {
+                var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
+                    .SetTitle(_currentWord.ToUpper())
+                    .SetMessage($"{Resources.GetString(Resource.String.CorrectToastText)} {_currentWord}!")
+                    .SetNegativeButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
+                    .SetPositiveButton(Resources.GetString(Resource.String.ContinueButton), ContinueGame)
+                    .SetCancelable(false)
+                    .Create();
+
+                _myDialog = dialog;
+
+                _myDialog.Show();
+            }
+        }
+
+        private void ContinueGame(object sender, DialogClickEventArgs e)
+        {
+            _inactive = false;
+
+            _currentWord = GenerateNewWord();
+            _alphabetIntArray = new int[40];
+            _alphabetArray = new string[40];
+            _lifes = 7;
+
+            for (int i = 0; i < 40; i++)
+            {
+                if (i < GameHelper.GetAlphabet(_currentLocale).Length)
+                {
+                    _alphabetIntArray[i] = 1;
+                    _alphabetArray[i] = GameHelper.GetAlphabet(_currentLocale)[i];
+                }
+                else
+                {
+                    _alphabetIntArray[i] = 2;
+                    _alphabetArray[i] = string.Empty;
+                }
+            }
+            
+            _needFinishActivity = false;
+            _hintWasClicked = false;
+            _hintButton.Clickable = true;
+            _hintButton.Enabled = true;
+            _hintButton.Visibility = ViewStates.Visible;
+
+            _word1button.Text = _word2button.Text = _word3button.Text = _word4button.Text =
+                _word5button.Text = _word6button.Text = _word7button.Text = _word8button.Text =
+                _word9button.Text = _word10button.Text = string.Empty;
+
+            InitGameAndStart();
+        }
+
+        private string GenerateNewWord()
+        {
+            return "слово";
+        }
+
+        private void CloseDialog(object sender, DialogClickEventArgs e)
+        {
+            _inactive = false;
+            ((Android.Support.V7.App.AlertDialog)sender).Dismiss();
+            Finish();
         }
 
         private void OnLetterClicked(object sender, EventArgs e)
         {
+            if (_inactive)
+                return;
+
             if (_needFinishActivity)
             {
                 Intent myIntent = new Intent(this, typeof(MainActivity));
@@ -877,6 +1028,12 @@ namespace bw
                 myIntent.PutExtra("wordWasGuessed", false);
                 SetResult(Result.Ok, myIntent);
                 Finish();
+                return;
+            }
+
+            if (_lifes <= 0)
+            {
+                ShowFinishAlert(false);
                 return;
             }
 
@@ -1093,7 +1250,8 @@ namespace bw
                 _lifes--;
                 if (_lifes <= 0)
                 {
-                    _needFinishActivity = true;
+                    if (_friendMode)
+                        _needFinishActivity = true;
 
                     var anim = new ScaleAnimation(1f, 1.3f, 1f, 1.3f, 50f, 50f);
                     anim.RepeatMode = RepeatMode.Reverse;
@@ -1109,11 +1267,18 @@ namespace bw
 
         private void Anim_AnimationEnd(object sender, Animation.AnimationEndEventArgs e)
         {
-            Intent myIntent = new Intent(this, typeof(MainActivity));
-            myIntent.PutExtra("currentWord", _currentWord.ToUpper());
-            myIntent.PutExtra("wordWasGuessed", false);
-            SetResult(Result.Ok, myIntent);
-            Finish();
+            if (_friendMode)
+            {
+                Intent myIntent = new Intent(this, typeof(MainActivity));
+                myIntent.PutExtra("currentWord", _currentWord.ToUpper());
+                myIntent.PutExtra("wordWasGuessed", false);
+                SetResult(Result.Ok, myIntent);
+                Finish();
+            }
+            else
+            {
+                ShowFinishAlert(false);
+            }
         }
     }
 }

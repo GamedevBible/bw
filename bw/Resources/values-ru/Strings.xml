@@ -34,4 +34,13 @@
   <string name="HintNotAvailableText">Количество минут до следующей подсказки: {0}</string>
   <string name="OpenNextHintText">Открыть следующую букву?</string>
   <string name="HintWillBeLessMinute">Подсказка будет доступна через несколько секунд</string>
+
+  <string name="FriendsWord">Слово друга</string>
+  <string name="CatAll">Все</string>
+  <string name="CatNames">Имена</string>
+  <string name="CatCities">Города</string>
+  <string name="CatCountries">Страны</string>
+  <string name="CatBooks">Книги</string>
+
+  <string name="ContinueButton">Продолжить</string>
 </resources>
