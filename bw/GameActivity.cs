@@ -956,7 +956,7 @@ namespace bw
             {
                 var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
                     .SetTitle(_currentWord.ToUpper())
-                    .SetMessage($"{Resources.GetString(Resource.String.CorrectToastText)} {_currentWord}!")
+                    .SetMessage($"{Resources.GetString(Resource.String.CorrectToastText)} {_currentWord.ToUpper()}!")
                     .SetNegativeButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
                     .SetPositiveButton(Resources.GetString(Resource.String.ContinueButton), ContinueGame)
                     .SetCancelable(false)
