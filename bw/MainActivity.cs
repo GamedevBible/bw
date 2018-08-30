@@ -344,6 +344,11 @@ namespace bw
         {
             base.OnResume();
 
+            _startButton.Text = Resources.GetString(Resource.String.MenuStartGame);
+            _friendButton.Text = Resources.GetString(Resource.String.MenuFriendGame);
+            _moreGamesButton.Text = Resources.GetString(Resource.String.MenuOtherGames);
+            _contactsButton.Text = Resources.GetString(Resource.String.MenuOptions);
+
             _inactive = false;
 
             _guessedWords.Text = Resources.GetString(Resource.String.SuccessfulGames) + ": " + _preferencesHelper?.GetGuessedWords();

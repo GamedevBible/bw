@@ -30,9 +30,9 @@ namespace bw
         {
             var words = new List<words>();
             
-            if (level > 0)
+            /*if (level > 0)
                 if (_words.Where(t => t.category == category && t.level == level - 1).ToList().Count == 0)
-                    level = 0;
+                    level = 0;*/
 
             if (category == 0)
                 if (level == 0)

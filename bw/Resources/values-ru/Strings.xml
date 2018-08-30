@@ -57,4 +57,5 @@
   <string name="Loading">Загрузка...</string>
   <string name="SuccessfulGames">Успешных игр</string>
   <string name="SuccessfulHardGames">Успешных сложных игр</string>
+  <string name="AllWordsGuessed">Ура! Все слова в выбранной категории и выбранной сложности угаданы!</string>
 </resources>

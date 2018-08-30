@@ -57,4 +57,5 @@
   <string name="Loading">Cargando...</string>
   <string name="SuccessfulGames">Juegos exitosos</string>
   <string name="SuccessfulHardGames">Juegos duros exitosos</string>
+  <string name="AllWordsGuessed">¡Todas las palabras en la categoría seleccionada y el nivel seleccionado son adivinadas!</string>
 </resources>

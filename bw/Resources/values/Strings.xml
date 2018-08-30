@@ -52,4 +52,5 @@
   <string name="Loading">Loading...</string>
   <string name="SuccessfulGames">Successful games</string>
   <string name="SuccessfulHardGames">Successful hard games</string>
+  <string name="AllWordsGuessed">All words in selected category and selected level are guessed!</string>
 </resources>

@@ -2747,6 +2747,9 @@ namespace bw
 			// aapt resource value: 0x7f060036
 			public const int AboutDonatesButton = 2131099702;
 			
+			// aapt resource value: 0x7f060051
+			public const int AllWordsGuessed = 2131099729;
+			
 			// aapt resource value: 0x7f060039
 			public const int AppVersionLabel = 2131099705;
 			
@@ -2816,14 +2819,14 @@ namespace bw
 			// aapt resource value: 0x7f060021
 			public const int Hello = 2131099681;
 			
-			// aapt resource value: 0x7f060051
-			public const int HintDialogText = 2131099729;
+			// aapt resource value: 0x7f060052
+			public const int HintDialogText = 2131099730;
 			
-			// aapt resource value: 0x7f060053
-			public const int HintNotAvailableText = 2131099731;
+			// aapt resource value: 0x7f060054
+			public const int HintNotAvailableText = 2131099732;
 			
-			// aapt resource value: 0x7f060055
-			public const int HintWillBeLessMinute = 2131099733;
+			// aapt resource value: 0x7f060056
+			public const int HintWillBeLessMinute = 2131099734;
 			
 			// aapt resource value: 0x7f06004a
 			public const int LevelAll = 2131099722;
@@ -2855,8 +2858,8 @@ namespace bw
 			// aapt resource value: 0x7f060029
 			public const int OkButton = 2131099689;
 			
-			// aapt resource value: 0x7f060054
-			public const int OpenNextHintText = 2131099732;
+			// aapt resource value: 0x7f060055
+			public const int OpenNextHintText = 2131099733;
 			
 			// aapt resource value: 0x7f060042
 			public const int SelectCategory = 2131099714;
@@ -2864,8 +2867,8 @@ namespace bw
 			// aapt resource value: 0x7f060049
 			public const int SelectLevel = 2131099721;
 			
-			// aapt resource value: 0x7f060052
-			public const int StartFromBeginningTitle = 2131099730;
+			// aapt resource value: 0x7f060053
+			public const int StartFromBeginningTitle = 2131099731;
 			
 			// aapt resource value: 0x7f06004f
 			public const int SuccessfulGames = 2131099727;

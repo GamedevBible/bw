@@ -1086,7 +1086,7 @@ namespace bw
         {
             var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
                     .SetTitle(_currentWord.ToUpper())
-                    .SetMessage("Все слова выбранной категории и сложности угаданы! Ура!")
+                    .SetMessage(Resources.GetString(Resource.String.AllWordsGuessed))
                     .SetNegativeButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
                     .SetCancelable(false)
                     .Create();
