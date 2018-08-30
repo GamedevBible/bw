@@ -22,14 +22,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/backButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             app:srcCompat="@drawable/chevron_double_left"
             android:layout_centerVertical="true"/>
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:textSize="16sp"
-          android:textColor="@color/bw_blue"
+          android:textColor="@color/dark_gray"
           android:layout_marginLeft="10dp"
           android:layout_marginStart="10dp"
           android:layout_marginRight="10dp"
@@ -49,7 +49,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/hintButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/comment_question_outline"/>
       </RelativeLayout>
@@ -59,12 +59,13 @@
         android:layout_below="@+id/topLinear"
         android:layout_above="@+id/bottomLinear"
         android:id="@+id/bridgeImage"
-        android:background="@color/bw_blue"/>
+        android:background="@android:color/white"/>
       <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:id="@+id/bottomLinear"
         android:layout_height="wrap_content">

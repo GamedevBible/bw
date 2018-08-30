@@ -30,6 +30,12 @@
   <string name="GameWordsTitle">Words for game:</string>
   <string name="ThanksBottomMessage">(here will be noted who support us)</string>
 
+  <string name="MenuStartGame">Start game</string>
+  <string name="MenuFriendGame">Word for friend</string>
+  <string name="MenuOptions">Options</string>
+  <string name="MenuOtherGames">Other games</string>
+
+  <string name="SelectCategory">Select a category:</string>
   <string name="FriendsWord">Friend\'s word</string>
   <string name="CatAll">All</string>
   <string name="CatNames">Names</string>
@@ -37,5 +43,13 @@
   <string name="CatCountries">Countries</string>
   <string name="CatBooks">Books</string>
 
+  <string name="SelectLevel">Select level:</string>
+  <string name="LevelAll">All</string>
+  <string name="LevelEasy">Easy</string>
+  <string name="LevelHard">Hard</string>
+
   <string name="ContinueButton">Continue</string>
+  <string name="Loading">Loading...</string>
+  <string name="SuccessfulGames">Successful games</string>
+  <string name="SuccessfulHardGames">Successful hard games</string>
 </resources>

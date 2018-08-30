@@ -10,6 +10,8 @@ namespace bw
         private bool _firstStarted;
         private int _selectedLanguage;
         private string _lastVersion;
+        private int _guessedWords;
+        private int _guessedHardWords;
 
         public PreferencesHelper()
         {
@@ -27,6 +29,8 @@ namespace bw
             _lastVersion = _prefs.GetString("lastVersion", string.Empty);
             _selectedLanguage = _prefs.GetInt("selectedLanguage", 0);
             _firstStarted = _prefs.GetBoolean("firstStarted", true);
+            _guessedWords = _prefs.GetInt("guessedWords", 0);
+            _guessedHardWords = _prefs.GetInt("guessedHardWords", 0);
         }
 
         public string GetLastVersion()
@@ -78,6 +82,44 @@ namespace bw
                 _editor = _prefs.Edit();
 
             _editor.PutBoolean("firstStarted", started);
+            _editor.Commit();
+        }
+
+        public int GetGuessedWords()
+        {
+            return _guessedWords;
+        }
+
+        public void PutGuessWord(Context context)
+        {
+            if (_prefs == null)
+                _prefs = PreferenceManager.GetDefaultSharedPreferences(context);
+
+            if (_editor == null)
+                _editor = _prefs.Edit();
+
+            _guessedWords = _prefs.GetInt("guessedWords", 0);
+            _guessedWords++;
+            _editor.PutInt("guessedWords", _guessedWords);
+            _editor.Commit();
+        }
+
+        public int GetGuessedHardWords()
+        {
+            return _guessedHardWords;
+        }
+
+        public void PutGuessHardWord(Context context)
+        {
+            if (_prefs == null)
+                _prefs = PreferenceManager.GetDefaultSharedPreferences(context);
+
+            if (_editor == null)
+                _editor = _prefs.Edit();
+
+            _guessedHardWords = _prefs.GetInt("guessedHardWords", 0);
+            _guessedHardWords++;
+            _editor.PutInt("guessedWords", _guessedHardWords);
             _editor.Commit();
         }
     }

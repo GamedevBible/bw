@@ -35,12 +35,26 @@
   <string name="OpenNextHintText">Открыть следующую букву?</string>
   <string name="HintWillBeLessMinute">Подсказка будет доступна через несколько секунд</string>
 
+  <string name="MenuStartGame">Начать игру</string>
+  <string name="MenuFriendGame">Загадать слово другу</string>
+  <string name="MenuOptions">Дополнительно</string>
+  <string name="MenuOtherGames">Другие наши игры</string>
+  
+  <string name="SelectCategory">Выберите категорию:</string>
   <string name="FriendsWord">Слово друга</string>
   <string name="CatAll">Все</string>
   <string name="CatNames">Имена</string>
   <string name="CatCities">Города</string>
   <string name="CatCountries">Страны</string>
   <string name="CatBooks">Книги</string>
+  
+  <string name="SelectLevel">Выберите сложность:</string>
+  <string name="LevelAll">Все</string>
+  <string name="LevelEasy">Легко</string>
+  <string name="LevelHard">Сложно</string>
 
   <string name="ContinueButton">Продолжить</string>
+  <string name="Loading">Загрузка...</string>
+  <string name="SuccessfulGames">Успешных игр</string>
+  <string name="SuccessfulHardGames">Успешных сложных игр</string>
 </resources>

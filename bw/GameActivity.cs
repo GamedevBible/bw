@@ -13,6 +13,7 @@ using Java.Util;
 using Android.Content.PM;
 using Android.Views.Animations;
 using Android.Support.V7.Widget;
+using System.Threading.Tasks;
 
 namespace bw
 {
@@ -129,28 +130,50 @@ namespace bw
         private bool _inactive;
         private bool _friendMode;
         private string _category;
+        private int _categoryIndex;
+        private int _levelIndex;
         private TextView _categoryTV;
         private bool _needFinishActivity;
         private bool _hintWasClicked;
         private string _currentWord;
+        private int _currentWordId;
+        private string _level;
         private int[] _alphabetIntArray;
+        private List<int> _exceptIds = new List<int>();
         private string[] _alphabetArray;
         private ProgressDialog _progressDialog;
         private Locales _currentLocale;
         private int _lifes;
         private ImageView _bridgeImage;
+
+        private PreferencesHelper _preferencesHelper;
+        private WordsDatabase _wordsDatabase;
+
         private string[] _categories => new string[] {
             Resources.GetString(Resource.String.CatAll).ToUpper(),
             Resources.GetString(Resource.String.CatNames).ToUpper(),
             Resources.GetString(Resource.String.CatCities).ToUpper(),
             Resources.GetString(Resource.String.CatCountries).ToUpper(),
             Resources.GetString(Resource.String.CatBooks).ToUpper()};
-        protected override void OnCreate(Bundle savedInstanceState)
+
+        private string[] _levels => new string[] {
+            Resources.GetString(Resource.String.LevelAll).ToUpper(),
+            Resources.GetString(Resource.String.LevelEasy).ToUpper(),
+            Resources.GetString(Resource.String.LevelHard).ToUpper()};
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
             
             _friendMode = Intent.GetBooleanExtra(nameof(_friendMode), false);
+
+            _preferencesHelper = new PreferencesHelper();
+            _preferencesHelper.InitHepler(this);
+
+            _progressDialog = new ProgressDialog(this, Resource.Style.ProgressDialogTheme) { Indeterminate = true };
+            _progressDialog.SetCancelable(false);
+            _progressDialog.SetProgressStyle(ProgressDialogStyle.Spinner);
+            _progressDialog.SetMessage(Resources.GetString(Resource.String.Loading));
 
             if (_friendMode)
             {
@@ -159,8 +182,31 @@ namespace bw
             }
             else
             {
-                _currentWord = GenerateNewWord();
-                _category = _categories[Intent.GetIntExtra(nameof(_category), 0)];
+                if (!_progressDialog.IsShowing)
+                    _progressDialog.Show();
+
+                if (_wordsDatabase == null)
+                    _wordsDatabase = new WordsDatabase(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
+                                
+                _categoryIndex = Intent.GetIntExtra(nameof(_categoryIndex), 0);
+                _levelIndex = Intent.GetIntExtra(nameof(_levelIndex), 0);
+                _category = _categories[_categoryIndex];
+                _level = _levels[_levelIndex];
+
+                var wordInfo = await Task.Run(() => _wordsDatabase.GetItem(_categoryIndex, _levelIndex, new int[] { }));
+                _currentWord = wordInfo.Word;
+                _currentWordId = wordInfo.Id;
+
+                if (string.IsNullOrWhiteSpace(_currentWord) && _currentWordId == -1)
+                {
+                    if (_progressDialog.IsShowing)
+                        _progressDialog.Dismiss();
+                    ShowAllWordsGuessedAlert();
+                    return;
+                }
+
+                if (_progressDialog.IsShowing)
+                    _progressDialog.Dismiss();
             }
 
             var currentLanguage = Locale.Default.Language;
@@ -189,16 +235,16 @@ namespace bw
                 _currentWord = savedInstanceState.GetString(nameof(_currentWord));
                 _alphabetIntArray = savedInstanceState.GetIntArray(nameof(_alphabetIntArray));
                 _lifes = savedInstanceState.GetInt(nameof(_lifes));
-                _category = savedInstanceState.GetString(nameof(_category));
+                _categoryIndex = savedInstanceState.GetInt(nameof(_categoryIndex));
                 _needFinishActivity = savedInstanceState.GetBoolean(nameof(_needFinishActivity));
                 _hintWasClicked = savedInstanceState.GetBoolean(nameof(_hintWasClicked));
                 _friendMode = savedInstanceState.GetBoolean(nameof(_friendMode));
+                _levelIndex = savedInstanceState.GetInt(nameof(_levelIndex));
+                _exceptIds = savedInstanceState.GetIntArray(nameof(_exceptIds)).ToList();
+                _category = _categories[_categoryIndex];
+                _level = _levels[_levelIndex];
+                _currentWordId = savedInstanceState.GetInt(nameof(_currentWordId));
             }
-
-            _progressDialog = new ProgressDialog(this, Resource.Style.ProgressDialogTheme) { Indeterminate = true };
-            _progressDialog.SetCancelable(false);
-            _progressDialog.SetProgressStyle(ProgressDialogStyle.Spinner);
-            _progressDialog.SetMessage("Загрузка...");
 
             SetContentView(Resource.Layout.game);
 
@@ -297,10 +343,13 @@ namespace bw
             outState.PutString(nameof(_currentWord), _currentWord);
             outState.PutIntArray(nameof(_alphabetIntArray), _alphabetIntArray);
             outState.PutInt(nameof(_lifes), _lifes);
-            outState.PutString(nameof(_category), _category);
+            outState.PutInt(nameof(_categoryIndex), _categoryIndex);
+            outState.PutInt(nameof(_levelIndex), _levelIndex);
             outState.PutBoolean(nameof(_needFinishActivity), _needFinishActivity);
             outState.PutBoolean(nameof(_hintWasClicked), _hintWasClicked);
             outState.PutBoolean(nameof(_friendMode), _friendMode);
+            outState.PutIntArray(nameof(_exceptIds), _exceptIds.ToArray());
+            outState.PutInt(nameof(_currentWordId), _currentWordId);
         }
 
         private void RefreshAlphabet()
@@ -411,6 +460,7 @@ namespace bw
             }
             else
             {
+                _exceptIds.Add(_currentWordId);
                 ShowFinishAlert(true);
             }
         }
@@ -737,13 +787,14 @@ namespace bw
             _letter40Layout.Visibility = _alphabetIntArray[39] != 2 ? ViewStates.Visible : ViewStates.Gone;
         }
 
-        public static Intent CreateStartIntent(Context context, bool friendMode, string currentWord = "", int category = -1)
+        public static Intent CreateStartIntent(Context context, bool friendMode, string currentWord = "", int category = -1, int level = -1)
         {
             var intent = new Intent(context, typeof(GameActivity));
             
             intent.PutExtra(nameof(_currentWord), currentWord);
-            intent.PutExtra(nameof(_category), category);
+            intent.PutExtra(nameof(_categoryIndex), category);
             intent.PutExtra(nameof(_friendMode), friendMode);
+            intent.PutExtra(nameof(_levelIndex), level);
 
             return intent;
         }
@@ -751,6 +802,7 @@ namespace bw
         private void InitViews()
         {
             _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
+            _bridgeImage.SetImageResource(Resource.Drawable.bridge1);
             _categoryTV = FindViewById<TextView>(Resource.Id.category);
             _categoryTV.Text = _category;
 
@@ -965,17 +1017,40 @@ namespace bw
                 _myDialog = dialog;
 
                 _myDialog.Show();
+
+                if (_levelIndex == 2)
+                    _preferencesHelper.PutGuessHardWord(this);
+                else
+                    _preferencesHelper.PutGuessWord(this);
             }
         }
 
-        private void ContinueGame(object sender, DialogClickEventArgs e)
+        private async void ContinueGame(object sender, DialogClickEventArgs e)
         {
             _inactive = false;
 
-            _currentWord = GenerateNewWord();
+            if (!_progressDialog.IsShowing)
+                _progressDialog.Show();
+
+            if (_wordsDatabase == null)
+                _wordsDatabase = new WordsDatabase(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
+
+            var wordInfo = await Task.Run(() => _wordsDatabase.GetItem(_categoryIndex, _levelIndex, _exceptIds.ToArray()));
+            _currentWord = wordInfo.Word;
+            _currentWordId = wordInfo.Id;
+            
+            if (string.IsNullOrWhiteSpace(_currentWord) && _currentWordId == -1)
+            {
+                if (_progressDialog.IsShowing)
+                    _progressDialog.Dismiss();
+                ShowAllWordsGuessedAlert();
+                return;
+            }
+                        
             _alphabetIntArray = new int[40];
             _alphabetArray = new string[40];
             _lifes = 7;
+            _bridgeImage.SetImageResource(Resource.Drawable.bridge1);
 
             for (int i = 0; i < 40; i++)
             {
@@ -1002,11 +1077,23 @@ namespace bw
                 _word9button.Text = _word10button.Text = string.Empty;
 
             InitGameAndStart();
+
+            if (_progressDialog.IsShowing)
+                _progressDialog.Dismiss();
         }
 
-        private string GenerateNewWord()
+        private void ShowAllWordsGuessedAlert()
         {
-            return "слово";
+            var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.AlertDialogTheme)
+                    .SetTitle(_currentWord.ToUpper())
+                    .SetMessage("Все слова выбранной категории и сложности угаданы! Ура!")
+                    .SetNegativeButton(Resources.GetString(Resource.String.CloseButton), CloseDialog)
+                    .SetCancelable(false)
+                    .Create();
+
+            _myDialog = dialog;
+
+            _myDialog.Show();
         }
 
         private void CloseDialog(object sender, DialogClickEventArgs e)
@@ -1033,6 +1120,7 @@ namespace bw
 
             if (_lifes <= 0)
             {
+                _bridgeImage.SetImageResource(Resource.Drawable.bridge8);
                 ShowFinishAlert(false);
                 return;
             }
@@ -1248,12 +1336,41 @@ namespace bw
             if (!(_currentWord.ToUpper().Contains(buttonPressed.Text.ToUpper())))
             {
                 _lifes--;
+
+                switch(_lifes)
+                {
+                    case 6:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge2);
+                        break;
+                    case 5:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge3);
+                        break;
+                    case 4:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge4);
+                        break;
+                    case 3:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge5);
+                        break;
+                    case 2:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge6);
+                        break;
+                    case 1:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge7);
+                        break;
+                    case 0:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge8);
+                        break;
+                    default:
+                        _bridgeImage.SetImageResource(Resource.Drawable.bridge8);
+                        break;
+                }
+
                 if (_lifes <= 0)
                 {
                     if (_friendMode)
                         _needFinishActivity = true;
 
-                    var anim = new ScaleAnimation(1f, 1.3f, 1f, 1.3f, 50f, 50f);
+                    var anim = new ScaleAnimation(1f, 1.3f, 1f, 1.3f, Dimension.RelativeToSelf, 0.5f, Dimension.RelativeToSelf, 0.5f);
                     anim.RepeatMode = RepeatMode.Reverse;
                     anim.Duration = 1000;
                     anim.RepeatCount = 1;

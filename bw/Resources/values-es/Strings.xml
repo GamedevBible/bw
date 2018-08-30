@@ -35,6 +35,12 @@
   <string name="OpenNextHintText">Quieres abrir la siguiente carta?</string>
   <string name="HintWillBeLessMinute">La información sobre herramientas estará disponible en unos pocos segundos</string>
 
+  <string name="MenuStartGame">Empezar juego</string>
+  <string name="MenuFriendGame">Palabra para amigo</string>
+  <string name="MenuOptions">Opciones</string>
+  <string name="MenuOtherGames">Otros juegos</string>
+
+  <string name="SelectCategory">Seleccione una categoría:</string>
   <string name="FriendsWord">Palabra de un amigo</string>
   <string name="CatAll">Todas</string>
   <string name="CatNames">Nombres</string>
@@ -42,5 +48,13 @@
   <string name="CatCountries">Países</string>
   <string name="CatBooks">Libros</string>
 
+  <string name="SelectLevel">Selecciona el nivel:</string>
+  <string name="LevelAll">Todas</string>
+  <string name="LevelEasy">Fácil</string>
+  <string name="LevelHard">Difícil</string>
+
   <string name="ContinueButton">Continuar</string>
+  <string name="Loading">Cargando...</string>
+  <string name="SuccessfulGames">Juegos exitosos</string>
+  <string name="SuccessfulHardGames">Juegos duros exitosos</string>
 </resources>

@@ -33,6 +33,8 @@ namespace bw
         private Button _friendButton;
         private Button _contactsButton;
         private Button _moreGamesButton;
+        private TextView _guessedWords;
+        private TextView _guessedHardWords;
 
         private PreferencesHelper _preferencesHelper;
         private bool _needShowWhatsNew;
@@ -44,6 +46,7 @@ namespace bw
         private EditText _editText;
         private string _gameCurrentWord;
         private bool _wordWasGuessed;
+        private int _selectedCategory;
 
         private string[] _categories => new string[] {
             Resources.GetString(Resource.String.CatAll).ToUpper(),
@@ -51,6 +54,11 @@ namespace bw
             Resources.GetString(Resource.String.CatCities).ToUpper(),
             Resources.GetString(Resource.String.CatCountries).ToUpper(),
             Resources.GetString(Resource.String.CatBooks).ToUpper()};
+
+        private string[] _levels => new string[] {
+            Resources.GetString(Resource.String.LevelAll).ToUpper(),
+            Resources.GetString(Resource.String.LevelEasy).ToUpper(),
+            Resources.GetString(Resource.String.LevelHard).ToUpper()};
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -65,6 +73,7 @@ namespace bw
             if (_firstStarted)
             {
                 ShowGreetingsAlert();
+                CopyDatabase("");
                 _firstStarted = false;
                 _preferencesHelper.PutFirstStarted(this, _firstStarted);
                 _preferencesHelper.PutLastVersion(this, PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Configurations).VersionName);
@@ -75,6 +84,7 @@ namespace bw
                 if (_needShowWhatsNew)
                     ShowWhatsNewAlert();
                 _preferencesHelper.PutLastVersion(this, PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Configurations).VersionName);
+                CopyDatabase("");
             }
 
             ApplyCulture();
@@ -82,6 +92,34 @@ namespace bw
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
             InitViews();
+        }
+
+        private void CopyDatabase(string dataBaseName)
+        {
+            dataBaseName = "bwords.db";
+            var dbPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "/" + dataBaseName;
+
+            if (System.IO.File.Exists(dbPath))
+                System.IO.File.Delete(dbPath);
+
+            if (!System.IO.File.Exists(dbPath))
+            {
+                var dbAssetStream = Assets.Open(dataBaseName);
+                var dbFileStream = new System.IO.FileStream(dbPath, System.IO.FileMode.OpenOrCreate);
+                var buffer = new byte[1024];
+
+                int b = buffer.Length;
+                int length;
+
+                while ((length = dbAssetStream.Read(buffer, 0, b)) > 0)
+                {
+                    dbFileStream.Write(buffer, 0, length);
+                }
+
+                dbFileStream.Flush();
+                dbFileStream.Close();
+                dbAssetStream.Close();
+            }
         }
 
         private void OnButtonClicked(object sender, EventArgs e)
@@ -97,8 +135,8 @@ namespace bw
                 case Resource.Id.startButton:
                     _inactive = false;
                     new Android.Support.V7.App.AlertDialog.Builder(this)
-                    .SetItems(_categories, DialogClickHandler)
-                    .SetTitle("Category")
+                    .SetItems(_categories, CategoryClickHandler)
+                    .SetTitle(Resources.GetString(Resource.String.SelectCategory))
                         .Show();
                     break;
                 case Resource.Id.recordsButton:
@@ -137,32 +175,22 @@ namespace bw
             }
         }
 
-        private void DialogClickHandler(object sender, DialogClickEventArgs e)
+        private void CategoryClickHandler(object sender, DialogClickEventArgs e)
         {
             _inactive = false;
-            var intent = GameActivity.CreateStartIntent(this, false, "Error", 0);
 
-            switch (e.Which)
-            {
-                case 0:
-                    intent = GameActivity.CreateStartIntent(this, false, "Библия", 0);
-                    break;
-                case 1:
-                    intent = GameActivity.CreateStartIntent(this, false, "Иоанн", 1);
-                    break;
-                case 2:
-                    intent = GameActivity.CreateStartIntent(this, false, "Иерусалим", 2);
-                    break;
-                case 3:
-                    intent = GameActivity.CreateStartIntent(this, false, "Египет", 3);
-                    break;
-                case 4:
-                    intent = GameActivity.CreateStartIntent(this, false, "Числа", 4);
-                    break;
-                default:
-                    break;
-            }
+            _selectedCategory = e.Which;
 
+            new Android.Support.V7.App.AlertDialog.Builder(this)
+                    .SetItems(_levels, LevelClickHandler)
+                    .SetTitle(Resources.GetString(Resource.String.SelectLevel))
+                        .Show();
+        }
+
+        private void LevelClickHandler(object sender, DialogClickEventArgs e)
+        {
+            var intent = GameActivity.CreateStartIntent(this, false, string.Empty, _selectedCategory, e.Which);
+            
             StartActivityForResult(intent, _gameActivityCode);
         }
 
@@ -217,11 +245,18 @@ namespace bw
             _friendButton = FindViewById<Button>(Resource.Id.recordsButton);
             _moreGamesButton = FindViewById<Button>(Resource.Id.guideButton);
             _contactsButton = FindViewById<Button>(Resource.Id.contactsButton);
+            _guessedWords = FindViewById<TextView>(Resource.Id.guessedWords);
+            _guessedHardWords = FindViewById<TextView>(Resource.Id.guessedHardWords);
             _startButton.Click += OnButtonClicked;
             _friendButton.Click += OnButtonClicked;
             _moreGamesButton.Click += OnButtonClicked;
             _contactsButton.Click += OnButtonClicked;
 
+            _startButton.Text = Resources.GetString(Resource.String.MenuStartGame);
+            _friendButton.Text = Resources.GetString(Resource.String.MenuFriendGame);
+            _moreGamesButton.Text = Resources.GetString(Resource.String.MenuOtherGames);
+            _contactsButton.Text = Resources.GetString(Resource.String.MenuOptions);
+            
             var currentLanguage = Locale.Default.Language;
             _currentLocale = currentLanguage == "es" ? Locales.Spain : currentLanguage == "ru" ? Locales.Russian : Locales.English;
         }
@@ -310,6 +345,9 @@ namespace bw
             base.OnResume();
 
             _inactive = false;
+
+            _guessedWords.Text = Resources.GetString(Resource.String.SuccessfulGames) + ": " + _preferencesHelper?.GetGuessedWords();
+            _guessedHardWords.Text = Resources.GetString(Resource.String.SuccessfulHardGames) + ": " + _preferencesHelper?.GetGuessedHardWords();
 
             if (!string.IsNullOrEmpty(_gameCurrentWord))
             {
