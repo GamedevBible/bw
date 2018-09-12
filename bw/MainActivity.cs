@@ -13,6 +13,11 @@ using System;
 using System.Text.RegularExpressions;
 using Android.Text;
 using Android.Runtime;
+using Android.Animation;
+using Android.Support.V4.Content;
+using Android.Views.Animations;
+using System.Threading.Tasks;
+using Android.Graphics;
 
 namespace bw
 {
@@ -21,6 +26,7 @@ namespace bw
     public class MainActivity : AppCompatActivity
     {
         private int _gameActivityCode = 777;
+        private bool _needAnimateButtonsUp;
 
         public enum Locales
         {
@@ -35,6 +41,7 @@ namespace bw
         private Button _moreGamesButton;
         private TextView _guessedWords;
         private TextView _guessedHardWords;
+        private View _mainLayout;
 
         private PreferencesHelper _preferencesHelper;
         private bool _needShowWhatsNew;
@@ -47,6 +54,10 @@ namespace bw
         private string _gameCurrentWord;
         private bool _wordWasGuessed;
         private int _selectedCategory;
+        private int _darkGrayColor;
+        private int _lightGrayColor;
+        private int _defaultColor;
+        private ObjectAnimator _anim;
 
         private string[] _categories => new string[] {
             Resources.GetString(Resource.String.CatAll).ToUpper(),
@@ -64,10 +75,15 @@ namespace bw
         {
             base.OnCreate(bundle);
 
+            _needAnimateButtonsUp = true;
             _preferencesHelper = new PreferencesHelper();
             _preferencesHelper.InitHepler(this);
             _firstStarted = _preferencesHelper.GetFirstStarted();
-            
+
+            _defaultColor = ContextCompat.GetColor(this, Resource.Color.game_gray);
+            _darkGrayColor = ContextCompat.GetColor(this, Resource.Color.dark_gray);
+            _lightGrayColor = ContextCompat.GetColor(this, Resource.Color.lighter_gray);
+
             _needShowWhatsNew = BwConfig.NeedShowWhatsNew;
 
             if (_firstStarted)
@@ -92,7 +108,20 @@ namespace bw
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
             InitViews();
+            //StartAnimationBackground();
         }
+
+        /*private void StartAnimationBackground()
+        {
+            _anim = ObjectAnimator.OfInt(_mainLayout, "backgroundColor",
+                _defaultColor, _lightGrayColor);
+            _anim.SetEvaluator(new ArgbEvaluator());
+            _anim.RepeatMode = ValueAnimatorRepeatMode.Reverse;
+            _anim.RepeatCount = Animation.Infinite;
+            _anim.SetDuration(10000);
+            _anim.SetupStartValues();
+            _anim.Start();
+        }*/
 
         private void CopyDatabase(string dataBaseName)
         {
@@ -245,8 +274,12 @@ namespace bw
             _friendButton = FindViewById<Button>(Resource.Id.recordsButton);
             _moreGamesButton = FindViewById<Button>(Resource.Id.guideButton);
             _contactsButton = FindViewById<Button>(Resource.Id.contactsButton);
+
+            _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Gone;
+
             _guessedWords = FindViewById<TextView>(Resource.Id.guessedWords);
             _guessedHardWords = FindViewById<TextView>(Resource.Id.guessedHardWords);
+            _mainLayout = FindViewById<View>(Resource.Id.mainLayout);
             _startButton.Click += OnButtonClicked;
             _friendButton.Click += OnButtonClicked;
             _moreGamesButton.Click += OnButtonClicked;
@@ -340,7 +373,7 @@ namespace bw
             }
         }
 
-        protected override void OnResume()
+        protected async override void OnResume()
         {
             base.OnResume();
 
@@ -380,6 +413,49 @@ namespace bw
                 }
 
                 _gameCurrentWord = string.Empty;
+            }
+
+            if (_needAnimateButtonsUp)
+            {
+                _needAnimateButtonsUp = false;
+
+                try
+                {
+                    await Task.Delay(200);
+
+                    var point = new Point();
+                    WindowManager.DefaultDisplay.GetSize(point);
+
+                    Animation animation = new TranslateAnimation(0, 0, point.Y, 0);
+                    animation.Duration = 1000;
+                    animation.FillEnabled = true;
+                    animation.FillBefore = false;
+                    animation.FillAfter = true;
+
+                    AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
+                    animation1.Duration = 1500;
+                    animation1.FillEnabled = true;
+                    animation1.FillAfter = true;
+
+                    AnimationSet anims = new AnimationSet(true);
+                    anims.AddAnimation(animation);
+                    anims.AddAnimation(animation1);
+
+                    _startButton.StartAnimation(anims);
+                    _contactsButton.StartAnimation(anims);
+                    _moreGamesButton.StartAnimation(anims);
+                    _friendButton.StartAnimation(anims);
+                    
+                    _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Visible;
+                }
+                catch
+                {
+                    _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Visible;
+                }
+                finally
+                {
+                    _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Visible;
+                }
             }
         }
 

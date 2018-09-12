@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/game_gray"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+  android:id="@+id/mainLayout">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@+id/buttonsLayout"
+        android:layout_above="@+id/startButton"
         android:layout_alignParentTop="true">
         <ImageView
             android:layout_width="100dp"
@@ -16,20 +17,15 @@
             android:background="@color/transparent"
             android:src="@drawable/logoBible"/>
     </FrameLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:id="@+id/buttonsLayout">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
             android:layout_centerHorizontal="true"
+            android:layout_above="@+id/recordsButton"
             android:text="Начать игру"
+            android:visibility="gone"
             android:id="@+id/startButton"
             style="@style/Widget.AppCompat.Button"
             android:textColor="@android:color/white"
@@ -40,6 +36,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
             android:text="Загадать слово другу"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
             android:id="@+id/recordsButton"
             style="@style/Widget.AppCompat.Button"
             android:textColor="@android:color/white"
@@ -48,6 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_below="@+id/recordsButton"
+            android:visibility="gone"
             android:text="Дополнительно"
             android:layout_marginBottom="5dp"
             android:id="@+id/contactsButton"
@@ -58,13 +58,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_below="@+id/contactsButton"
             android:layout_marginBottom="15dp"
             android:text="Другие наши игры"
+            android:visibility="gone"
             android:id="@+id/guideButton"
             style="@style/Widget.AppCompat.Button"
             android:textColor="@color/bw_blue"
             android:ems="18" />
-    </LinearLayout>
     <LinearLayout
       android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1894,9 +1894,6 @@ namespace bw
 			// aapt resource value: 0x7f0b002e
 			public const int buttonPanel = 2131427374;
 			
-			// aapt resource value: 0x7f0b00cf
-			public const int buttonsLayout = 2131427535;
-			
 			// aapt resource value: 0x7f0b00e2
 			public const int cancel_action = 2131427554;
 			
@@ -2256,6 +2253,9 @@ namespace bw
 			
 			// aapt resource value: 0x7f0b002b
 			public const int list_item = 2131427371;
+			
+			// aapt resource value: 0x7f0b00cf
+			public const int mainLayout = 2131427535;
 			
 			// aapt resource value: 0x7f0b00e4
 			public const int media_actions = 2131427556;
