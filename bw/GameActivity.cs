@@ -14,6 +14,9 @@ using Android.Content.PM;
 using Android.Views.Animations;
 using Android.Support.V7.Widget;
 using System.Threading.Tasks;
+using Com.Bumptech.Glide;
+using Android.Graphics.Drawables;
+using Com.Bumptech.Glide.Load.Engine;
 
 namespace bw
 {
@@ -799,10 +802,22 @@ namespace bw
             return intent;
         }
 
-        private void InitViews()
+        private async void InitViews()
         {
             _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
-            _bridgeImage.SetImageResource(Resource.Drawable.bridge1);
+
+            //await Task.Factory.StartNew(() => Glide.Get(this).ClearDiskCache());
+
+            /*RunOnUiThread(() =>
+            {
+                Glide.Get(this).ClearMemory();
+            });*/
+
+            RunOnUiThread(() =>
+            {
+                Glide.With(this).Load(Resource.Drawable.bridge_default).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+            });
             _categoryTV = FindViewById<TextView>(Resource.Id.category);
             _categoryTV.Text = _category;
 
@@ -1050,7 +1065,11 @@ namespace bw
             _alphabetIntArray = new int[40];
             _alphabetArray = new string[40];
             _lifes = 7;
-            _bridgeImage.SetImageResource(Resource.Drawable.bridge1);
+            RunOnUiThread(() =>
+            {
+                Glide.With(this).Load(Resource.Drawable.bridge_default).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+            });
 
             for (int i = 0; i < 40; i++)
             {
@@ -1103,7 +1122,7 @@ namespace bw
             Finish();
         }
 
-        private void OnLetterClicked(object sender, EventArgs e)
+        private async void OnLetterClicked(object sender, EventArgs e)
         {
             if (_inactive)
                 return;
@@ -1120,7 +1139,33 @@ namespace bw
 
             if (_lifes <= 0)
             {
-                _bridgeImage.SetImageResource(Resource.Drawable.bridge8);
+                RunOnUiThread(() =>
+                {
+                    Glide.Get(this).ClearMemory();
+                });
+
+                await Task.Factory.StartNew(() => Glide.Get(this).ClearDiskCache());
+
+                RunOnUiThread(() =>
+                {
+                    Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                });
+
+                await Task.Delay(2000);
+
+                RunOnUiThread(() =>
+                {
+                    Glide.Get(this).ClearMemory();
+                });
+
+                await Task.Factory.StartNew(() => Glide.Get(this).ClearDiskCache());
+
+                RunOnUiThread(() =>
+                {
+                    Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                });
                 ShowFinishAlert(false);
                 return;
             }
@@ -1331,7 +1376,7 @@ namespace bw
             }                
         }
 
-        private void ProccessLifes(Button buttonPressed)
+        private async void ProccessLifes(Button buttonPressed)
         {
             if (!(_currentWord.ToUpper().Contains(buttonPressed.Text.ToUpper())))
             {
@@ -1340,28 +1385,124 @@ namespace bw
                 switch(_lifes)
                 {
                     case 6:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge2);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_1).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_1_1).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     case 5:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge3);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_2).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_2_2).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     case 4:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge4);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_3).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_3_3).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     case 3:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge5);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_4).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_4_4).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     case 2:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge6);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_5).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_5_5).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     case 1:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge7);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_6).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_6_6).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     case 0:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge8);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                     default:
-                        _bridgeImage.SetImageResource(Resource.Drawable.bridge8);
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
+
+                        await Task.Delay(1000);
+
+                        RunOnUiThread(() =>
+                        {
+                            Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                        });
                         break;
                 }
 
@@ -1370,14 +1511,19 @@ namespace bw
                     if (_friendMode)
                         _needFinishActivity = true;
 
-                    var anim = new ScaleAnimation(1f, 1.3f, 1f, 1.3f, Dimension.RelativeToSelf, 0.5f, Dimension.RelativeToSelf, 0.5f);
-                    anim.RepeatMode = RepeatMode.Reverse;
-                    anim.Duration = 1000;
-                    anim.RepeatCount = 1;
-                    anim.FillEnabled = true;
-                    anim.FillAfter = true;
-                    anim.AnimationEnd += Anim_AnimationEnd;
-                    RunOnUiThread(() => _bridgeImage.StartAnimation(anim));
+                    RunOnUiThread(() =>
+                    {
+                        Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                    });
+
+                    await Task.Delay(1000);
+
+                    RunOnUiThread(() =>
+                    {
+                        Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                    });
                 }
             }
         }

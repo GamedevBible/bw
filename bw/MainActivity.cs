@@ -18,6 +18,8 @@ using Android.Support.V4.Content;
 using Android.Views.Animations;
 using System.Threading.Tasks;
 using Android.Graphics;
+using Com.Bumptech.Glide;
+using Com.Bumptech.Glide.Load.Engine;
 
 namespace bw
 {
@@ -42,6 +44,7 @@ namespace bw
         private TextView _guessedWords;
         private TextView _guessedHardWords;
         private View _mainLayout;
+        private ImageView _bridgeImage;
 
         private PreferencesHelper _preferencesHelper;
         private bool _needShowWhatsNew;
@@ -274,6 +277,7 @@ namespace bw
             _friendButton = FindViewById<Button>(Resource.Id.recordsButton);
             _moreGamesButton = FindViewById<Button>(Resource.Id.guideButton);
             _contactsButton = FindViewById<Button>(Resource.Id.contactsButton);
+            _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
 
             _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Gone;
 
@@ -421,7 +425,21 @@ namespace bw
 
                 try
                 {
-                    await Task.Delay(200);
+                    /*await Task.Delay(200);
+
+                    RunOnUiThread(() =>
+                    {
+                        Glide.With(this).Load(Resource.Drawable.bridge_start).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                    });
+
+                    await Task.Delay(10000);
+                    
+                    RunOnUiThread(() =>
+                    {
+                        Glide.With(this).Load(Resource.Drawable.bridge_default).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                    });*/
 
                     var point = new Point();
                     WindowManager.DefaultDisplay.GetSize(point);

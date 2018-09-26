@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
   <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    <item name="colorPrimary">@color/bw_blue</item>
-    <item name="colorPrimaryDark">@color/bw_dark_blue</item>
-    <item name="colorAccent">@color/bw_blue</item>
-    <item name="android:colorButtonNormal">@color/dark_gray</item>
-    <item name="colorButtonNormal">@color/dark_gray</item>
+    <item name="colorPrimary">@color/brown_color</item>
+    <item name="colorPrimaryDark">@color/sky_color</item>
+    <item name="colorAccent">@color/brown_color</item>
+    <item name="android:colorButtonNormal">@color/orange_color</item>
+    <item name="colorButtonNormal">@color/orange_color</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
     <item name="android:windowContentTransitions">true</item>
@@ -19,22 +19,22 @@
   </style>
 
   <style name="AlertDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-    <item name="colorPrimary">@color/bw_blue</item>
-    <item name="colorPrimaryDark">@color/bw_dark_blue</item>
-    <item name="colorAccent">@color/bw_blue</item>
+    <item name="colorPrimary">@color/brown_color</item>
+    <item name="colorPrimaryDark">@color/brown_color</item>
+    <item name="colorAccent">@color/brown_color</item>
   </style>
 
   <style name="ProgressDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-    <item name="colorPrimary">@color/bw_blue</item>
-    <item name="colorPrimaryDark">@color/bw_dark_blue</item>
-    <item name="colorAccent">@color/bw_blue</item>
+    <item name="colorPrimary">@color/brown_color</item>
+    <item name="colorPrimaryDark">@color/brown_color</item>
+    <item name="colorAccent">@color/brown_color</item>
     <item name="android:windowBackground">@color/transparent</item>
   </style>
 
   <style name="FriendWordDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-    <item name="colorPrimary">@color/bw_blue</item>
-    <item name="colorPrimaryDark">@color/bw_dark_blue</item>
-    <item name="colorAccent">@color/bw_blue</item>
+    <item name="colorPrimary">@color/brown_color</item>
+    <item name="colorPrimaryDark">@color/brown_color</item>
+    <item name="colorAccent">@color/brown_color</item>
     <item name="android:windowAnimationStyle">@style/FriendWordDialogAnimation</item>
   </style>
 

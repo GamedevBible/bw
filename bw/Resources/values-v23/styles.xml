@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/brown_color</item>
+    <item name="colorPrimaryDark">@color/sky_color</item>
+    <item name="colorAccent">@color/brown_color</item>
+    <item name="android:colorButtonNormal">@color/orange_color</item>
+    <item name="colorButtonNormal">@color/orange_color</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowContentTransitions">true</item>
+    <item name="android:windowLightStatusBar">true</item>
+    <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>-->
+    <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>-->
+  </style>
+</resources>

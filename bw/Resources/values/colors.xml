@@ -15,6 +15,11 @@
   <color name="good_answer">#00E676</color>
   <color name="bad_answer">#F44336</color>
   <color name="game_gray">#DDDDDD</color>
+  
+  <color name="sky_color">#BEF3EE</color>
+  <color name="brown_color">#9E5959</color>
+  <color name="orange_color">#FFD2B8</color>
+  <color name="light_brown_color">#F3CAB3</color>
 
   <color name="fpow_green">#00c853</color>
   <color name="bm_blue">#01A7F2</color>

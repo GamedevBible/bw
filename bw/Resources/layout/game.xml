@@ -1,220 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/game_gray"
+    android:background="@color/brown_color"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-      android:layout_weight="1"
-      android:layout_width="match_parent"
-      android:layout_height="0dp">
-      <RelativeLayout
+  <RelativeLayout
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
+        android:background="@android:color/white"
         android:id="@+id/topLinear"
         android:layout_height="wrap_content">
-        <android.support.v7.widget.AppCompatImageButton
-            android:background="?attr/selectableItemBackground"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_margin="5dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/backButton"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            app:srcCompat="@drawable/chevron_double_left"
-            android:layout_centerVertical="true"/>
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textSize="16sp"
-          android:textColor="@color/dark_gray"
-          android:layout_marginLeft="10dp"
-          android:layout_marginStart="10dp"
-          android:layout_marginRight="10dp"
-          android:layout_marginEnd="10dp"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:maxLines="1"
-          android:gravity="center"
-          android:id="@+id/category"
-          android:padding="5dp"
-          android:text="КАТЕГОРИЯ"/>     
-        <android.support.v7.widget.AppCompatImageButton
-            android:background="?attr/selectableItemBackground"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_margin="5dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/hintButton"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/comment_question_outline"/>
-      </RelativeLayout>
-      <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topLinear"
-        android:layout_above="@+id/bottomLinear"
-        android:id="@+id/bridgeImage"
-        android:background="@android:color/white"/>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:id="@+id/bottomLinear"
-        android:layout_height="wrap_content">
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word1layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word1button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-      <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word2layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word2button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-      <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word3layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word3button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word4layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word4button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word5layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word5button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word6layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word6button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word7layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word7button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word8layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word8button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word9layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word9button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-      <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_margin="3dp"
-             android:id="@+id/word10layout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
-        <Button
-            android:clickable="false"
-            android:background="@drawable/field_background"
-            android:textColor="@android:color/white"
-            android:id="@+id/word10button"
-            android:text=""
-            android:layout_width="24dp"
-            android:layout_height="26dp" />
-      </FrameLayout>
-      </LinearLayout>    
-    </RelativeLayout>
-    <RelativeLayout
-      android:layout_weight="1"
+    <android.support.v7.widget.AppCompatImageButton
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/backButton"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        app:srcCompat="@drawable/chevron_double_left"
+        android:layout_centerVertical="true"/>
+    <TextView
       android:layout_width="match_parent"
-      android:layout_height="0dp">
+      android:layout_height="wrap_content"
+      android:textSize="16sp"
+      android:textColor="@color/brown_color"
+      android:layout_marginLeft="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_marginEnd="10dp"
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:maxLines="1"
+      android:gravity="center"
+      android:id="@+id/category"
+      android:padding="5dp"
+      android:text="КАТЕГОРИЯ"/>
+    <android.support.v7.widget.AppCompatImageButton
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/hintButton"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/comment_question_outline"/>
+  </RelativeLayout>
+  <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/topLinear"
+        android:background="@color/sky_color"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/bridgeImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/light_brown_color"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+  </android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+      android:layout_alignParentBottom="true"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/letters">
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -977,6 +832,155 @@
         </LinearLayout>
       
       </LinearLayout>
-    
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_above="@+id/letters"
+        android:layout_marginBottom="35dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_margin="3dp"
+             android:id="@+id/word1layout"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word1button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_margin="3dp"
+               android:id="@+id/word2layout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word2button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_margin="3dp"
+               android:id="@+id/word3layout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word3button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_margin="3dp"
+                     android:id="@+id/word4layout"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word4button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_margin="3dp"
+                     android:id="@+id/word5layout"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word5button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_margin="3dp"
+                     android:id="@+id/word6layout"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word6button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_margin="3dp"
+                     android:id="@+id/word7layout"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word7button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_margin="3dp"
+                     android:id="@+id/word8layout"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word8button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_margin="3dp"
+                     android:id="@+id/word9layout"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word9button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_margin="3dp"
+               android:id="@+id/word10layout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+          <Button
+              android:clickable="false"
+              android:background="@drawable/field_background"
+              android:textColor="@color/brown_color"
+              android:id="@+id/word10button"
+              android:text=""
+              android:layout_width="24dp"
+              android:layout_height="26dp" />
+        </FrameLayout>
+      </LinearLayout>
+
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

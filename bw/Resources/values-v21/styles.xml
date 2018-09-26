@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <style name="ProgressDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorPrimary">@color/brown_color</item>
+    <item name="colorPrimaryDark">@color/brown_color</item>
+    <item name="colorAccent">@color/brown_color</item>
+  </style>
+</resources>
