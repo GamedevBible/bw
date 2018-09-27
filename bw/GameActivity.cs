@@ -256,9 +256,9 @@ namespace bw
             InitViews();
 
             if (savedInstanceState == null)
-            {
                 StartDefaultAnim();
-            }
+            else
+                StartDestroyAnim();
 
             InitGameAndStart();
         }
@@ -1128,6 +1128,7 @@ namespace bw
         {
             if (_inactive)
                 return;
+            _inactive = true;
 
             if (_needFinishActivity)
             {
@@ -1141,19 +1142,48 @@ namespace bw
 
             if (_lifes <= 0)
             {
-                RunOnUiThread(() =>
-                {
-                    /*Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);*/
-                });
+                var from0to1Anim = new AlphaAnimation(0f, 1f);
+                var from1to0Anim = new AlphaAnimation(1f, 0f);
+                from1to0Anim.Duration = 100;
+                from0to1Anim.Duration = 100;
+                var from0to1Anim1 = new AlphaAnimation(0f, 1f);
+                var from1to0Anim1 = new AlphaAnimation(1f, 0f);
+                from1to0Anim1.Duration = 100;
+                from0to1Anim1.Duration = 100;
 
-                await Task.Delay(2000);
-
-                RunOnUiThread(() =>
+                from1to0Anim.AnimationEnd += (o, s) =>
                 {
-                    /*Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);*/
-                });
+                    RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                };
+                from0to1Anim.AnimationEnd += (o, s) =>
+                {
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                };
+                _bridgeImage.Visibility = ViewStates.Visible;
+                RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                _bridgeWebView.LoadUrl("file:///android_asset/bridge_7_7.html");
+
+                for (var i = 0; i < 12; i++)
+                {
+                    await Task.Delay(10);
+                    int id = Resources.GetIdentifier($"d_7_{i}", "drawable", PackageName);
+                    _bridgeImage.SetImageResource(id);
+                }
+
+                from0to1Anim1.AnimationEnd += (o, s) =>
+                {
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                    _inactive = false;
+                };
+                from1to0Anim1.AnimationEnd += (o, s) =>
+                {
+                    _bridgeImage.Visibility = ViewStates.Gone;
+                    _inactive = false;
+                };
+                _bridgeWebView.Visibility = ViewStates.Visible;
+                RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+
                 ShowFinishAlert(false);
                 return;
             }
@@ -1370,155 +1400,61 @@ namespace bw
             {
                 _lifes--;
 
-                // TODO
-                /*switch(_lifes)
-                {
-                    case 6:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_1).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_1_1).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    case 5:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_2).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_2_2).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    case 4:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_3).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_3_3).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    case 3:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_4).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_4_4).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    case 2:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_5).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_5_5).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    case 1:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_6).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_6_6).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    case 0:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                    default:
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-
-                        await Task.Delay(1000);
-
-                        RunOnUiThread(() =>
-                        {
-                            Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                        });
-                        break;
-                }*/
+                StartDestroyAnim();
 
                 if (_lifes <= 0)
                 {
                     if (_friendMode)
                         _needFinishActivity = true;
 
-                    // TODO
-                    /*RunOnUiThread(() =>
-                    {
-                        Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                    });*/
+                    var from0to1Anim = new AlphaAnimation(0f, 1f);
+                    var from1to0Anim = new AlphaAnimation(1f, 0f);
+                    from1to0Anim.Duration = 100;
+                    from0to1Anim.Duration = 100;
+                    var from0to1Anim1 = new AlphaAnimation(0f, 1f);
+                    var from1to0Anim1 = new AlphaAnimation(1f, 0f);
+                    from1to0Anim1.Duration = 100;
+                    from0to1Anim1.Duration = 100;
 
-                    await Task.Delay(1000);
-
-                    /*RunOnUiThread(() =>
+                    from1to0Anim.AnimationEnd += (o, s) =>
                     {
-                        Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                    });*/
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_7_7.html");
+
+                    for (var i = 0; i < 12; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_7_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
                 }
             }
+            else
+                _inactive = false;
         }
 
-        private void Anim_AnimationEnd(object sender, Animation.AnimationEndEventArgs e)
+        private void FinishAnimationEnd()
         {
             if (_friendMode)
             {
@@ -1531,6 +1467,298 @@ namespace bw
             else
             {
                 ShowFinishAlert(false);
+            }
+        }
+
+        private async void StartDestroyAnim()
+        {
+            var from0to1Anim = new AlphaAnimation(0f, 1f);
+            var from1to0Anim = new AlphaAnimation(1f, 0f);
+            from1to0Anim.Duration = 100;
+            from0to1Anim.Duration = 100;
+            var from0to1Anim1 = new AlphaAnimation(0f, 1f);
+            var from1to0Anim1 = new AlphaAnimation(1f, 0f);
+            from1to0Anim1.Duration = 100;
+            from0to1Anim1.Duration = 100;
+
+            switch (_lifes)
+            {
+                case 7:
+                    break;
+                case 6:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_1_1.html");
+                    
+                    for (var i = 0; i < 5; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_1_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    break;
+                case 5:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_2_2.html");
+
+                    for (var i = 0; i < 5; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_2_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    break;
+                case 4:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_3_3.html");
+
+                    for (var i = 0; i < 6; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_3_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    break;
+                case 3:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_4_4.html");
+
+                    for (var i = 0; i < 6; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_4_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    break;
+                case 2:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_5_5.html");
+
+                    for (var i = 0; i < 6; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_5_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    break;
+                case 1:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_6_6.html");
+
+                    for (var i = 0; i < 18; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_6_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    break;
+                case 0:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_7_7.html");
+
+                    for (var i = 0; i < 12; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_7_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    FinishAnimationEnd();
+                    break;
+                default:
+                    from1to0Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.Visibility = ViewStates.Gone);
+                    };
+                    from0to1Anim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeWebView.StartAnimation(from1to0Anim));
+                    };
+                    _bridgeImage.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeImage.StartAnimation(from0to1Anim));
+
+                    _bridgeWebView.LoadUrl("file:///android_asset/bridge_7_7.html");
+
+                    for (var i = 0; i < 12; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"d_7_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    from0to1Anim1.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(from1to0Anim1));
+                        _inactive = false;
+                    };
+                    from1to0Anim1.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                        _inactive = false;
+                    };
+                    _bridgeWebView.Visibility = ViewStates.Visible;
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(from0to1Anim1));
+                    FinishAnimationEnd();
+                    break;
             }
         }
     }

@@ -168,11 +168,11 @@ namespace bw
             switch (clickedButton.Id)
             {
                 case Resource.Id.startButton:
-                    _inactive = false;
                     new Android.Support.V7.App.AlertDialog.Builder(this)
                     .SetItems(_categories, CategoryClickHandler)
                     .SetTitle(Resources.GetString(Resource.String.SelectCategory))
                         .Show();
+                    _inactive = false;
                     break;
                 case Resource.Id.recordsButton:
                     var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.FriendWordDialog)
