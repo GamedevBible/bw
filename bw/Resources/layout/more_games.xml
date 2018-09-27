@@ -24,7 +24,6 @@
           android:layout_height="wrap_content">
         <ImageView
             android:background="@drawable/rounded_corners_fpow_icon"
-            android:padding="5dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -90,7 +89,6 @@
             android:layout_height="wrap_content">
           <ImageView
               android:background="@drawable/rounded_corners_bm_icon"
-              android:padding="5dp"
               android:layout_width="100dp"
               android:layout_height="100dp"
               android:layout_gravity="center"

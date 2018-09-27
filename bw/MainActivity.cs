@@ -26,7 +26,7 @@ using static Android.Views.View;
 namespace bw
 {
     [Activity(Theme = "@style/AppTheme.Main", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait,
-        Icon = "@drawable/Icon")]
+        Icon = "@mipmap/ic_launcher")]
     public class MainActivity : AppCompatActivity
     {
         private int _gameActivityCode = 777;

@@ -26,7 +26,7 @@
       android:layout_above="@+id/appVersion"
       android:id="@+id/separator0"
       android:layout_height="1dp"
-      android:background="@color/dark_gray"/>
+      android:background="@color/orange_color"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
       android:layout_above="@+id/lessonsLayout"
       android:id="@+id/separator1"
       android:layout_height="1dp"
-      android:background="@color/dark_gray"/>
+      android:background="@color/orange_color"/>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
       android:layout_below="@+id/lessonsLayout"
       android:id="@+id/separator2"
       android:layout_height="1dp"
-      android:background="@color/dark_gray"/>
+      android:background="@color/orange_color"/>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                  android:layout_below="@+id/separator2"
       android:layout_width="match_parent"
@@ -119,7 +119,7 @@
       android:layout_below="@+id/contactUsLayout"
       android:id="@+id/separator3"
       android:layout_height="1dp"
-      android:background="@color/dark_gray"/>
+      android:background="@color/orange_color"/>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                  android:layout_below="@+id/separator3"
       android:layout_width="match_parent"
@@ -154,7 +154,7 @@
       android:layout_below="@+id/supportUsLayout"
       android:id="@+id/separator4"
       android:layout_height="1dp"
-      android:background="@color/dark_gray"/>
+      android:background="@color/orange_color"/>
     <android.support.v7.widget.AppCompatImageButton
             android:background="?attr/selectableItemBackground"
             android:layout_width="60dp"
