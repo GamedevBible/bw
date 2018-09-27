@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using Android.Graphics;
 using Com.Bumptech.Glide;
 using Com.Bumptech.Glide.Load.Engine;
+using Android.Webkit;
+using static Android.Views.View;
 
 namespace bw
 {
@@ -45,6 +47,7 @@ namespace bw
         private TextView _guessedHardWords;
         private View _mainLayout;
         private ImageView _bridgeImage;
+        private WebView _bridgeWebView;
 
         private PreferencesHelper _preferencesHelper;
         private bool _needShowWhatsNew;
@@ -278,6 +281,7 @@ namespace bw
             _moreGamesButton = FindViewById<Button>(Resource.Id.guideButton);
             _contactsButton = FindViewById<Button>(Resource.Id.contactsButton);
             _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
+            _bridgeWebView = FindViewById<WebView>(Resource.Id.bridgeWebView);
 
             _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Gone;
 
@@ -425,6 +429,29 @@ namespace bw
 
                 try
                 {
+                    _bridgeWebView.LoadUrl("file:///android_asset/default.html");
+
+                    for (var i = 0; i < 52; i++)
+                    {
+                        await Task.Delay(10);
+                        int id = Resources.GetIdentifier($"i_{i}", "drawable", PackageName);
+                        _bridgeImage.SetImageResource(id);
+                    }
+
+                    var webAnim = new AlphaAnimation(0f, 1f);
+                    var imageAnim = new AlphaAnimation(1f, 0f);
+                    imageAnim.Duration = 100;
+                    webAnim.Duration = 100;
+                    webAnim.AnimationEnd += (o, s) =>
+                    {
+                        RunOnUiThread(() => _bridgeImage.StartAnimation(imageAnim));
+                    };
+                    imageAnim.AnimationEnd += (o, s) =>
+                    {
+                        _bridgeImage.Visibility = ViewStates.Gone;
+                    };
+                    RunOnUiThread(() => _bridgeWebView.StartAnimation(webAnim));
+
                     /*await Task.Delay(200);
 
                     RunOnUiThread(() =>

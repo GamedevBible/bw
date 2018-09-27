@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Com.Bumptech.Glide;
 using Android.Graphics.Drawables;
 using Com.Bumptech.Glide.Load.Engine;
+using Android.Webkit;
 
 namespace bw
 {
@@ -148,6 +149,7 @@ namespace bw
         private Locales _currentLocale;
         private int _lifes;
         private ImageView _bridgeImage;
+        private WebView _bridgeWebView;
 
         private PreferencesHelper _preferencesHelper;
         private WordsDatabase _wordsDatabase;
@@ -253,7 +255,19 @@ namespace bw
 
             InitViews();
 
+            if (savedInstanceState == null)
+            {
+                StartDefaultAnim();
+            }
+
             InitGameAndStart();
+        }
+
+        private void StartDefaultAnim()
+        {
+            _bridgeWebView.Visibility = ViewStates.Visible;
+            _bridgeWebView.LoadUrl("file:///android_asset/default.html");
+            _bridgeImage.Visibility = ViewStates.Gone;
         }
 
         protected override void OnResume()
@@ -805,19 +819,8 @@ namespace bw
         private async void InitViews()
         {
             _bridgeImage = FindViewById<ImageView>(Resource.Id.bridgeImage);
+            _bridgeWebView = FindViewById<WebView>(Resource.Id.bridgeWebView);
 
-            //await Task.Factory.StartNew(() => Glide.Get(this).ClearDiskCache());
-
-            /*RunOnUiThread(() =>
-            {
-                Glide.Get(this).ClearMemory();
-            });*/
-
-            RunOnUiThread(() =>
-            {
-                Glide.With(this).Load(Resource.Drawable.bridge_default).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-            });
             _categoryTV = FindViewById<TextView>(Resource.Id.category);
             _categoryTV.Text = _category;
 
@@ -1067,8 +1070,7 @@ namespace bw
             _lifes = 7;
             RunOnUiThread(() =>
             {
-                Glide.With(this).Load(Resource.Drawable.bridge_default).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                StartDefaultAnim();
             });
 
             for (int i = 0; i < 40; i++)
@@ -1141,30 +1143,16 @@ namespace bw
             {
                 RunOnUiThread(() =>
                 {
-                    Glide.Get(this).ClearMemory();
-                });
-
-                await Task.Factory.StartNew(() => Glide.Get(this).ClearDiskCache());
-
-                RunOnUiThread(() =>
-                {
-                    Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                    /*Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);*/
                 });
 
                 await Task.Delay(2000);
 
                 RunOnUiThread(() =>
                 {
-                    Glide.Get(this).ClearMemory();
-                });
-
-                await Task.Factory.StartNew(() => Glide.Get(this).ClearDiskCache());
-
-                RunOnUiThread(() =>
-                {
-                    Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
-                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
+                    /*Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
+                        .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);*/
                 });
                 ShowFinishAlert(false);
                 return;
@@ -1382,7 +1370,8 @@ namespace bw
             {
                 _lifes--;
 
-                switch(_lifes)
+                // TODO
+                /*switch(_lifes)
                 {
                     case 6:
                         RunOnUiThread(() =>
@@ -1504,26 +1493,27 @@ namespace bw
                         .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
                         });
                         break;
-                }
+                }*/
 
                 if (_lifes <= 0)
                 {
                     if (_friendMode)
                         _needFinishActivity = true;
 
-                    RunOnUiThread(() =>
+                    // TODO
+                    /*RunOnUiThread(() =>
                     {
                         Glide.With(this).Load(Resource.Drawable.bridge_7).DiskCacheStrategy(DiskCacheStrategy.None)
                         .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                    });
+                    });*/
 
                     await Task.Delay(1000);
 
-                    RunOnUiThread(() =>
+                    /*RunOnUiThread(() =>
                     {
                         Glide.With(this).Load(Resource.Drawable.bridge_7_7).DiskCacheStrategy(DiskCacheStrategy.None)
                         .SkipMemoryCache(true).Override(500, 500).Into(_bridgeImage);
-                    });
+                    });*/
                 }
             }
         }
