@@ -25,7 +25,7 @@ using static Android.Views.View;
 
 namespace bw
 {
-    [Activity(Theme = "@style/AppTheme.Main", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait,
+    [Activity(Theme = "@style/AppTheme.Main", ScreenOrientation = ScreenOrientation.Portrait,
         Icon = "@mipmap/ic_launcher")]
     public class MainActivity : AppCompatActivity
     {
@@ -518,6 +518,13 @@ namespace bw
                     _wordWasGuessed = data.GetBooleanExtra("wordWasGuessed", false);
                 }
             }
+        }
+
+        public static Intent CreateStartIntent(Context context, string message = null)
+        {
+            var intent = new Intent(context, typeof(MainActivity));
+            intent.SetFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
+            return intent;
         }
     }
 }

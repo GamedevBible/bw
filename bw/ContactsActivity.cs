@@ -57,7 +57,7 @@ namespace bw
             var localizedPart = $"<font>{Resources.GetString(Resource.String.HaveQuestionsLabel)}</font><br>" +
             $"<font>{Resources.GetString(Resource.String.WriteUsLabel)} </font>";
 
-            string text = localizedPart + "<font color=#616161>biblegamedev@gmail.com</font>";
+            string text = localizedPart + "<font color=#FFD2B8>biblegamedev@gmail.com</font>";
 
             _contactUs.SetText(Html.FromHtml(text), TextView.BufferType.Spannable);
 
