@@ -53,4 +53,6 @@
   <string name="SuccessfulGames">Successful games</string>
   <string name="SuccessfulHardGames">Successful hard games</string>
   <string name="AllWordsGuessed">All words in selected category and selected level are guessed!</string>
+  <string name="Designer">Design:</string>
+  <string name="FriendGamesLimit">Reached a limit of games with a friend. Do not worry, soon we will remove this limit.</string>
 </resources>

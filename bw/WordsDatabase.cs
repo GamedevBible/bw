@@ -16,14 +16,18 @@ namespace bw
 {
     public class WordsDatabase : SQLiteConnection
     {
+        private const string ru_db = "bwords_ru.db";
+        private const string en_db = "bwords_en.db";
+        private const string es_db = "bwords_es.db";
+
         public string DATABASE_NAME = Locale.Default.Language == "ru" 
-            ? "bwords_ru.db"
+            ? ru_db
             : Locale.Default.Language == "es"
-            ? "bwords_es.db" : "bwords_en.db";
+            ? es_db : en_db;
 
         private List<words> _words = new List<words>();
 
-        public WordsDatabase(string path) : base($"{path}/{DATABASE_NAME}")
+        public WordsDatabase(string path) : base($"{path}/{(Locale.Default.Language == "ru" ? ru_db : Locale.Default.Language == "es" ? es_db : en_db)}")
         {
             BeginTransaction();
 
@@ -49,7 +53,7 @@ namespace bw
                 else
                     words = _words.Where(t => t.category == category && t.level == level - 1).ToList();
 
-            Random rand = new Random();
+            System.Random rand = new System.Random();
             int temp;
 
             foreach (var id in except)

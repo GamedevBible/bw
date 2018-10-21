@@ -17,8 +17,8 @@ namespace bw
 
             _thanksTextView = view.FindViewById<TextView>(Resource.Id.thanksTextView);
             _thanksTextView.Text = $"{Resources.GetString(Resource.String.DevelopmentTitle)} " + "S. Larionov (Jr.)" + "\n" +
+                $"{Resources.GetString(Resource.String.Designer)} " + "I. Fadeev" + "\n" + "\n" +
                 $"{Resources.GetString(Resource.String.ThanksTitle)}: " + "\n" +
-                "I. Fadeev" + "\n" +
                 "S. Larionova" + "\n" +
 
                 "\n" + $"{Resources.GetString(Resource.String.ThanksBottomMessage)}";

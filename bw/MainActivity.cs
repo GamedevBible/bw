@@ -97,7 +97,10 @@ namespace bw
             if (_firstStarted)
             {
                 ShowGreetingsAlert();
-                CopyDatabase("");
+
+                CopyDatabase("bwords_ru.db");
+                //CopyDatabase("bwords_es.db");
+                CopyDatabase("bwords_en.db");
                 _firstStarted = false;
                 _preferencesHelper.PutFirstStarted(this, _firstStarted);
                 _preferencesHelper.PutLastVersion(this, PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Configurations).VersionName);
@@ -108,7 +111,10 @@ namespace bw
                 if (_needShowWhatsNew)
                     ShowWhatsNewAlert();
                 _preferencesHelper.PutLastVersion(this, PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Configurations).VersionName);
-                CopyDatabase("");
+
+                CopyDatabase("bwords_ru.db");
+                //CopyDatabase("bwords_es.db");
+                CopyDatabase("bwords_en.db");
             }
             
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
@@ -119,9 +125,6 @@ namespace bw
 
         private void CopyDatabase(string dataBaseName)
         {
-            dataBaseName = Locale.Default.Language == "ru" 
-                ? "bwords_ru.db" 
-                : Locale.Default.Language == "es" ? "bwords_es.db" : "bwords_en.db";
             var dbPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "/" + dataBaseName;
 
             if (System.IO.File.Exists(dbPath))
@@ -165,6 +168,13 @@ namespace bw
                     _inactive = false;
                     break;
                 case Resource.Id.recordsButton:
+                    if (_preferencesHelper.GetFriendGames() > 10)
+                    {
+                        Toast.MakeText(this, Resources.GetString(Resource.String.FriendGamesLimit), ToastLength.Long).Show();
+                        _inactive = false;
+                        return;
+                    }
+                    
                     var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.FriendWordDialog)
                     .SetMessage(Resources.GetString(Resource.String.FriendWordTitle))
                     .SetPositiveButton(Resources.GetString(Resource.String.OkButton), StartFriendGame)
@@ -228,6 +238,9 @@ namespace bw
 
             if (Regex.IsMatch(_editText.Text, regex))
             {
+                var games = _preferencesHelper.GetFriendGames();
+                games++;
+                _preferencesHelper.PutFriendGames(this, games);
                 var intent = GameActivity.CreateStartIntent(this, true, _editText.Text);
                 StartActivityForResult(intent, _gameActivityCode);
             }
@@ -310,28 +323,37 @@ namespace bw
                         var enLocale = new Locale("en", "US");
                         if (currentLocale.Language != enLocale.Language)
                         {
-                            Locale.Default = enLocale;
-                            var config = new Configuration { Locale = enLocale };
-                            config.Locale = enLocale;
-                            BaseContext.Resources.UpdateConfiguration(config, BaseContext.Resources.DisplayMetrics);
+                            RunOnUiThread(() =>
+                            {
+                                Locale.Default = enLocale;
+                                var config = new Configuration { Locale = enLocale };
+                                config.Locale = enLocale;
+                                BaseContext.Resources.UpdateConfiguration(config, BaseContext.Resources.DisplayMetrics);
+                            });
                         }
                         break;
                     case 2:
                         var ruLocale = new Locale("ru", "RU");
                         if (currentLocale.Language != ruLocale.Language)
                         {
-                            Locale.Default = ruLocale;
-                            var config1 = new Configuration { Locale = ruLocale };
-                            BaseContext.Resources.UpdateConfiguration(config1, BaseContext.Resources.DisplayMetrics);
+                            RunOnUiThread(() =>
+                            {
+                                Locale.Default = ruLocale;
+                                var config1 = new Configuration { Locale = ruLocale };
+                                BaseContext.Resources.UpdateConfiguration(config1, BaseContext.Resources.DisplayMetrics);
+                            });
                         }
                         break;
                     case 3:
                         var esLocale = new Locale("es");
                         if (currentLocale.Language != esLocale.Language)
                         {
-                            Locale.Default = esLocale;
-                            var config2 = new Configuration { Locale = esLocale };
-                            BaseContext.Resources.UpdateConfiguration(config2, BaseContext.Resources.DisplayMetrics);
+                            RunOnUiThread(() =>
+                            {
+                                Locale.Default = esLocale;
+                                var config2 = new Configuration { Locale = esLocale };
+                                BaseContext.Resources.UpdateConfiguration(config2, BaseContext.Resources.DisplayMetrics);
+                            });
                         }
                         break;
                 }

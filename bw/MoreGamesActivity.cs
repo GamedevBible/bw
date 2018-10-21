@@ -41,6 +41,8 @@ namespace bw
             _bmButton.Click += OnButtonClicked;
             _fpowButton.Click += OnButtonClicked;
 
+            _fpowButton.Text = _bmButton.Text = Locale.Default.Language == "ru" ? "Перейти к игре" : "Go to game";
+
             _fpowTitleTextView.Text = Locale.Default.Language == "ru" ? "4 фото 1 слово - Библия" : "4 photos 1 word - Bible";
             _fpowTextView.Text = "Игра, в которой вам предстоит отгадать, какое слово скрыто в представленных четырех фотографиях." + "\n" +
                 "Попробуйте отгадать все загаданные слова!" + "\n" +

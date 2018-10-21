@@ -58,4 +58,6 @@
   <string name="SuccessfulGames">Juegos exitosos</string>
   <string name="SuccessfulHardGames">Juegos duros exitosos</string>
   <string name="AllWordsGuessed">¡Todas las palabras en la categoría seleccionada y el nivel seleccionado son adivinadas!</string>
+  <string name="Designer">Diseño:</string>
+  <string name="FriendGamesLimit">Alcanzó un límite de juegos con un amigo. No te preocupes, pronto eliminaremos este límite.</string>
 </resources>

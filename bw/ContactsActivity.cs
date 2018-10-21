@@ -112,6 +112,9 @@ namespace bw
             _inactive = false;
             var currentLocale = Locale.Default;
 
+            Toast.MakeText(this, Locale.Default.Language == "ru"
+                ? "Данная функция пока может работать некорректно." : "This function can work unstable now.", ToastLength.Long).Show();
+
             switch (e.Which)
             {
                 case 0:

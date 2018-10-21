@@ -12,6 +12,7 @@ namespace bw
         private string _lastVersion;
         private int _guessedWords;
         private int _guessedHardWords;
+        private int _friendGames;
 
         public PreferencesHelper()
         {
@@ -31,13 +32,32 @@ namespace bw
             _firstStarted = _prefs.GetBoolean("firstStarted", true);
             _guessedWords = _prefs.GetInt("guessedWords", 0);
             _guessedHardWords = _prefs.GetInt("guessedHardWords", 0);
+            _friendGames = _prefs.GetInt("friendGames", 0);
+        }
+
+        public int GetFriendGames()
+        {
+            return _friendGames;
+        }
+
+        public void PutFriendGames(Context context, int games)
+        {
+            if (_prefs == null)
+                _prefs = PreferenceManager.GetDefaultSharedPreferences(context);
+
+            if (_editor == null)
+                _editor = _prefs.Edit();
+
+            _friendGames = games;
+            _editor.PutInt("friendGames", games);
+            _editor.Commit();
         }
 
         public string GetLastVersion()
         {
             return _lastVersion;
         }
-
+        
         public void PutLastVersion(Context context, string version)
         {
             if (_prefs == null)

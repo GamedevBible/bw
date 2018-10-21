@@ -58,4 +58,6 @@
   <string name="SuccessfulGames">Успешных игр</string>
   <string name="SuccessfulHardGames">Успешных сложных игр</string>
   <string name="AllWordsGuessed">Ура! Все слова в выбранной категории и выбранной сложности угаданы!</string>
+  <string name="Designer">Дизайн:</string>
+  <string name="FriendGamesLimit">Достигнут лимит игр с другом. Не переживайте, скоро мы уберем этот лимит :)</string>
 </resources>
