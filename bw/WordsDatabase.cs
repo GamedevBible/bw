@@ -10,12 +10,16 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using SQLite;
+using Java.Util;
 
 namespace bw
 {
     public class WordsDatabase : SQLiteConnection
     {
-        public const string DATABASE_NAME = "bwords.db";
+        public string DATABASE_NAME = Locale.Default.Language == "ru" 
+            ? "bwords_ru.db"
+            : Locale.Default.Language == "es"
+            ? "bwords_es.db" : "bwords_en.db";
 
         private List<words> _words = new List<words>();
 

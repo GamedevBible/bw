@@ -77,7 +77,7 @@ namespace bw
             Resources.GetString(Resource.String.LevelEasy).ToUpper(),
             Resources.GetString(Resource.String.LevelHard).ToUpper()};
 
-        protected override void OnCreate(Bundle bundle)
+        protected async override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
@@ -91,6 +91,8 @@ namespace bw
             _lightGrayColor = ContextCompat.GetColor(this, Resource.Color.lighter_gray);
 
             _needShowWhatsNew = BwConfig.NeedShowWhatsNew;
+
+            ApplyCulture();
 
             if (_firstStarted)
             {
@@ -108,30 +110,18 @@ namespace bw
                 _preferencesHelper.PutLastVersion(this, PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Configurations).VersionName);
                 CopyDatabase("");
             }
-
-            ApplyCulture();
-            SetContentView(Resource.Layout.main);
+            
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
-
+            SetContentView(Resource.Layout.main);
             InitViews();
             //StartAnimationBackground();
         }
 
-        /*private void StartAnimationBackground()
-        {
-            _anim = ObjectAnimator.OfInt(_mainLayout, "backgroundColor",
-                _defaultColor, _lightGrayColor);
-            _anim.SetEvaluator(new ArgbEvaluator());
-            _anim.RepeatMode = ValueAnimatorRepeatMode.Reverse;
-            _anim.RepeatCount = Animation.Infinite;
-            _anim.SetDuration(10000);
-            _anim.SetupStartValues();
-            _anim.Start();
-        }*/
-
         private void CopyDatabase(string dataBaseName)
         {
-            dataBaseName = "bwords.db";
+            dataBaseName = Locale.Default.Language == "ru" 
+                ? "bwords_ru.db" 
+                : Locale.Default.Language == "es" ? "bwords_es.db" : "bwords_en.db";
             var dbPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "/" + dataBaseName;
 
             if (System.IO.File.Exists(dbPath))
@@ -317,16 +307,17 @@ namespace bw
                 switch (selectedLocaleIndex)
                 {
                     case 1:
-                        var enLocale = new Locale("en");
+                        var enLocale = new Locale("en", "US");
                         if (currentLocale.Language != enLocale.Language)
                         {
                             Locale.Default = enLocale;
                             var config = new Configuration { Locale = enLocale };
+                            config.Locale = enLocale;
                             BaseContext.Resources.UpdateConfiguration(config, BaseContext.Resources.DisplayMetrics);
                         }
                         break;
                     case 2:
-                        var ruLocale = new Locale("ru");
+                        var ruLocale = new Locale("ru", "RU");
                         if (currentLocale.Language != ruLocale.Language)
                         {
                             Locale.Default = ruLocale;
@@ -377,6 +368,15 @@ namespace bw
             {
                 Locale.Default = spanishLocale;
                 var config = new Configuration { Locale = spanishLocale };
+                BaseContext.Resources.UpdateConfiguration(config, BaseContext.Resources.DisplayMetrics);
+            }
+
+            var engLocale = new Locale("en");
+
+            if (currentLocale.Language == engLocale.Language)
+            {
+                Locale.Default = engLocale;
+                var config = new Configuration { Locale = engLocale };
                 BaseContext.Resources.UpdateConfiguration(config, BaseContext.Resources.DisplayMetrics);
             }
         }
@@ -501,6 +501,10 @@ namespace bw
                 {
                     _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Visible;
                 }
+            }
+            else
+            {
+                _startButton.Visibility = _friendButton.Visibility = _moreGamesButton.Visibility = _contactsButton.Visibility = ViewStates.Visible;
             }
         }
 

@@ -7,6 +7,7 @@ using System;
 using Microsoft.AppCenter.Analytics;
 using Android;
 using Android.Content.PM;
+using Java.Util;
 
 namespace bw
 {
@@ -40,15 +41,17 @@ namespace bw
             _bmButton.Click += OnButtonClicked;
             _fpowButton.Click += OnButtonClicked;
 
-            _fpowTitleTextView.Text = "4 фото 1 слово - Библия";
+            _fpowTitleTextView.Text = Locale.Default.Language == "ru" ? "4 фото 1 слово - Библия" : "4 photos 1 word - Bible";
             _fpowTextView.Text = "Игра, в которой вам предстоит отгадать, какое слово скрыто в представленных четырех фотографиях." + "\n" +
                 "Попробуйте отгадать все загаданные слова!" + "\n" +
                 "В игре также постепенно будут добавляться новые уровни!";
+            _fpowTextView.Visibility = Locale.Default.Language == "ru" ? Android.Views.ViewStates.Visible : Android.Views.ViewStates.Gone;
 
-            _bmTitleTextView.Text = "Миллионер - Библия (русский язык)";
+            _bmTitleTextView.Text = Locale.Default.Language == "ru" ? "Миллионер - Библия (русский язык)" : "Millionaire - Bible (only russian language)";
             _bmTextView.Text = "Игра, в которой вам предстоит выбрать один из четырех представленных ответов на вопросы по Библии." + "\n" +
                 "Попробуйте дойти до самого конца и выиграть миллион очков!" + "\n" +
                 "В игре вас ждет более 3000 вопросов!";
+            _bmTextView.Visibility = Locale.Default.Language == "ru" ? Android.Views.ViewStates.Visible : Android.Views.ViewStates.Gone;
         }
 
         private void OnButtonClicked(object sender, EventArgs e)

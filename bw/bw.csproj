@@ -175,7 +175,10 @@
     <Compile Include="WordsDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\bwords.db">
+    <AndroidAsset Include="Assets\bwords_ru.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\bwords_en.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
     <None Include="GettingStarted.Xamarin" />
