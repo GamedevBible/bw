@@ -99,7 +99,7 @@ namespace bw
                 ShowGreetingsAlert();
 
                 CopyDatabase("bwords_ru.db");
-                //CopyDatabase("bwords_es.db");
+                CopyDatabase("bwords_es.db");
                 CopyDatabase("bwords_en.db");
                 _firstStarted = false;
                 _preferencesHelper.PutFirstStarted(this, _firstStarted);
@@ -113,7 +113,7 @@ namespace bw
                 _preferencesHelper.PutLastVersion(this, PackageManager.GetPackageInfo(PackageName, PackageInfoFlags.Configurations).VersionName);
 
                 CopyDatabase("bwords_ru.db");
-                //CopyDatabase("bwords_es.db");
+                CopyDatabase("bwords_es.db");
                 CopyDatabase("bwords_en.db");
             }
             
