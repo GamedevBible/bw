@@ -12,6 +12,9 @@ using Android.Widget;
 using Android.Content.PM;
 using System.Threading.Tasks;
 using Android.Support.V7.App;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace bw
 {
@@ -43,8 +46,7 @@ namespace bw
         {
             base.OnResume();
 
-            /*MobileCenter.Start("40d1e1c0-0450-4ef1-bda4-8d5f1365f069",
-                   typeof(Analytics), typeof(Crashes));*/ // PLAY MARKET
+            AppCenter.Start("2f9991e0-70ad-42fb-9a3a-7475eb1b4f5e", typeof(Analytics), typeof(Crashes));
 
             if (!_needStartApp)
             {
