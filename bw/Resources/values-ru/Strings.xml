@@ -45,7 +45,7 @@
   <string name="CatAll">Все</string>
   <string name="CatNames">Имена</string>
   <string name="CatCities">Города</string>
-  <string name="CatCountries">Страны</string>
+  <string name="CatCountries">Места</string>
   <string name="CatBooks">Книги</string>
   
   <string name="SelectLevel">Выберите сложность:</string>

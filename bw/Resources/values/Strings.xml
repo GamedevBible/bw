@@ -40,7 +40,7 @@
   <string name="CatAll">All</string>
   <string name="CatNames">Names</string>
   <string name="CatCities">Cities</string>
-  <string name="CatCountries">Countries</string>
+  <string name="CatCountries">Places</string>
   <string name="CatBooks">Books</string>
 
   <string name="SelectLevel">Select level:</string>

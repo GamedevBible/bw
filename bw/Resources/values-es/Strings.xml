@@ -45,7 +45,7 @@
   <string name="CatAll">Todas</string>
   <string name="CatNames">Nombres</string>
   <string name="CatCities">Ciudades</string>
-  <string name="CatCountries">Países</string>
+  <string name="CatCountries">Lugares</string>
   <string name="CatBooks">Libros</string>
 
   <string name="SelectLevel">Selecciona el nivel:</string>
