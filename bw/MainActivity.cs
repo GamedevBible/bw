@@ -167,14 +167,7 @@ namespace bw
                         .Show();
                     _inactive = false;
                     break;
-                case Resource.Id.recordsButton:
-                    if (_preferencesHelper.GetFriendGames() > 10)
-                    {
-                        Toast.MakeText(this, Resources.GetString(Resource.String.FriendGamesLimit), ToastLength.Long).Show();
-                        _inactive = false;
-                        return;
-                    }
-                    
+                case Resource.Id.recordsButton:                    
                     var dialog = new Android.Support.V7.App.AlertDialog.Builder(this, Resource.Style.FriendWordDialog)
                     .SetMessage(Resources.GetString(Resource.String.FriendWordTitle))
                     .SetPositiveButton(Resources.GetString(Resource.String.OkButton), StartFriendGame)
